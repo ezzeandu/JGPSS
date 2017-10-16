@@ -292,7 +292,7 @@ public final class Model implements Serializable {
 
             // Returns a random value between 0-999
         } else if (A.startsWith("RN")) {
-            java.util.Random rnd = new java.util.Random();
+            Random rnd = new Random();
             _A = String.valueOf(rnd.nextFloat() * 999);
         } // Float value of the string
         // Storage in use
