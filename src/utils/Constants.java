@@ -697,6 +697,12 @@ public class Constants {
      * Storages text.
      */
     public final static String tituloStorages = "Storages";
+    
+    /**
+     * Function text 
+     */
+    
+    public final static String tituloFunction = "Functions";
 
     /**
      * Seize text

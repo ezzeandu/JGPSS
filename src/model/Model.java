@@ -30,6 +30,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import model.entities.AmperVariable;
+import model.entities.Function;
 import model.entities.SaveValue;
 import utils.Constants;
 
@@ -56,6 +57,7 @@ public final class Model implements Serializable {
     private ArrayList<Proces> proces;
     private ArrayList<Storage> storages;
     private ArrayList<SaveValue> saveValues;
+    private ArrayList<Function> functions;
     @Getter @Setter
     private ArrayList<AmperVariable<?>> amperVariables;
     private ArrayList<Matrix<Float>> matrix;
@@ -110,6 +112,7 @@ public final class Model implements Serializable {
         saveValues = new ArrayList<>();
         matrix = new ArrayList<>();
         amperVariables = new ArrayList<>();
+        functions = new ArrayList<>();
 
         CEC = new PriorityQueue<>(1000, this.getPriorityComparator());
         FEC = new PriorityQueue<>(1000, this.getTimeComparator());

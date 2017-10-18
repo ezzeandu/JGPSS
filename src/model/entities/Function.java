@@ -22,6 +22,7 @@ import exceptions.MalformedFunctionDistribution;
 import java.util.ArrayList;
 import javafx.util.Pair;
 import lombok.Data;
+import model.entities.rng.Uniform;
 
 /**
  *
@@ -31,48 +32,118 @@ import lombok.Data;
 public class Function {
 
     private String name;
-    private Float A;
+    private String A;
     private String B;
-    private ArrayList<Pair<Float, Float>> distribution;
-    private int distributionSize;
+    private String distribution;
+    
+    int distributionSize;
 
     public final static String C = "C";
     public final static String D = "D";
-    public final static String E = "E";
+    public final static String E = "E"; // Not implemented 
     public final static String L = "L";
-    public final static String M = "M";
+    public final static String M = "M"; // Not implemented
 
     public Function(String name, String A, String B, String d) throws MalformedFunctionDistribution {
 
         this.name = name;
-        this.A = evaluateParameter(A);
-        Pair<String, Integer> type = evaluateFunctionType(B);
-        this.B = type.getKey();
-        this.distributionSize = type.getValue();
-        this.distribution = evaluateDistribution(d);
+        this.A = A; 
+        this.B = B;
+        this.distribution = d; 
+        this.distributionSize = evaluateFunctionType(B).getValue();
     }
-    
-    public Float evaluate() {
+
+    public Float evaluate() throws MalformedFunctionDistribution {
+
+        Float result = 0f;        
+        Pair<String, Integer> type = evaluateFunctionType(B);
+        int distributionSize = type.getValue();
+        Float Aeval = evaluateParameter(A);
+        ArrayList<Pair<Float, Float>> dist = evaluateDistribution(distribution, distributionSize);
         
-        Float result = 0f;
-        
-        switch(B) {
+        switch (type.getKey()) {
             case C:
+                result = evaluateCType(dist, Aeval);
                 break;
             case D:
+                result = evaluateDType(dist, Aeval);
                 break;
             case E:
+                result = evaluateEType();
                 break;
             case L:
+                result = evaluateLType(dist, Aeval);
                 break;
             case M:
+                result = evaluateMType();
                 break;
         }
-     
         return result;
     }
 
-    private ArrayList<Pair<Float, Float>> evaluateDistribution(String d) throws MalformedFunctionDistribution {
+    /**
+     * Continous function Given a value for X, interpolates and returns an
+     * integer value for Y
+     *
+     * @return
+     */
+    private Float evaluateCType(ArrayList<Pair<Float, Float>> distribution, Float A) {
+
+        Float y = distribution.stream()//
+                .filter(p -> p.getKey().equals(A))//
+                .map(p -> p.getValue())//
+                .findFirst()//
+                .orElse(0f);
+
+        return Float.valueOf(Math.round(y));
+    }
+
+    /**
+     * Discrete function Given a value for X, if an equal or bigger value is
+     * found, it returns its associated value. If it is not found, it returns
+     * the biggest value
+     *
+     * @return
+     */
+    private Float evaluateDType(ArrayList<Pair<Float, Float>> distribution, Float A) {
+
+        Float biggestValue = distribution.stream()//
+                .sorted((a, b) -> Float.compare(b.getKey(), a.getKey()))//
+                .map(p -> p.getValue())//                
+                .findFirst()//                
+                .orElse(0f);
+
+        return distribution.stream()//
+                .filter(p -> p.getKey() >= A)//
+                .map(p -> p.getValue())//
+                .findFirst()//
+                .orElse(biggestValue);
+    }
+
+    /**
+     * List Value Function Returns the value of the position X indicated by the
+     * function argument
+     *
+     * @return
+     */
+    private Float evaluateLType(ArrayList<Pair<Float, Float>> distribution, Float A) {
+
+        return distribution.stream()//
+                .filter(p -> p.getKey().equals(A))//
+                .map(p -> p.getValue())//
+                .findFirst()//
+                .orElse(0f);
+    }
+
+    private Float evaluateEType() {
+        return 0f;
+    }
+
+    private Float evaluateMType() {
+        return 0f;
+    }
+
+    private ArrayList<Pair<Float, Float>> evaluateDistribution(String d, int distributionSize) throws MalformedFunctionDistribution {
 
         ArrayList<Pair<Float, Float>> dist = new ArrayList<>();
 
@@ -105,7 +176,7 @@ public class Function {
         Integer size;
         String type;
 
-        if (!t.matches("[CDELM0-9]+")) {
+        if (!t.matches("[CDL0-9]+")) {
             throw new MalformedFunctionDistribution();
         }
 
@@ -114,19 +185,33 @@ public class Function {
         } catch (NumberFormatException e) {
             throw new MalformedFunctionDistribution();
         }
-        type = t.substring(0, 1);    
+        type = t.substring(0, 1);
         return new Pair<>(type, size);
     }
 
     private Float evaluateParameter(String A) throws MalformedFunctionDistribution {
-        
+
         Float f = new Float(0);
-        try {
-            f = Float.parseFloat(A);
+
+        if (A.matches("RN[0-9]*")) {
+
+            Integer n;
+            try {
+                n = Integer.valueOf(A.split("RN")[1]);
+            }
+            catch(NumberFormatException e) {
+                throw new MalformedFunctionDistribution();
+            }
+
+            f = new Uniform().generate(n, 0);
+
+        } else {
+            try {
+                f = Float.parseFloat(A);
+            } catch (NumberFormatException e) {
+                throw new MalformedFunctionDistribution();
+            }
         }
-        catch(NumberFormatException e) {
-            throw new MalformedFunctionDistribution();
-        }        
         return f;
     }
 }

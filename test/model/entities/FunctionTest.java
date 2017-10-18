@@ -102,6 +102,88 @@ public class FunctionTest extends TestCase {
     @Test
     public void test7() throws Exception {
         Function f = new Function("test", "1", "C3", "1,3/2,5/3,8");
-        assertEquals(Function.C, f.getB());
+        assertTrue(f.getB().startsWith("C"));
+    }
+
+    @Test
+    public void test8() throws MalformedFunctionDistribution {
+
+        try {
+            Function f = new Function("test", "1", "C03", "1,3/2,5/3,8");
+        } catch (MalformedFunctionDistribution e) {
+            assertEquals(e.getMessage(), "Malformed function distribution");
+        }
+    }
+
+    @Test
+    public void test9() throws Exception {
+
+        Function f = new Function("test", "0.4", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        assertEquals(f.evaluate(), 1f);
+    }
+
+    @Test
+    public void test10() throws Exception {
+
+        Function f = new Function("test", ".7", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        assertEquals(f.evaluate(), 2f);
+    }
+
+    @Test
+    public void test11() throws Exception {
+
+        Function f = new Function("test", ".5", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        assertEquals(f.evaluate(), 2f);
+    }
+
+    @Test
+    public void test12() throws Exception {
+
+        Function f = new Function("test", ".96", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        assertEquals(f.evaluate(), 5f);
+    }
+
+    @Test
+    public void test13() throws Exception {
+
+        Function f = new Function("test", "1.5", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        assertEquals(f.evaluate(), 5f);
+    }
+
+    @Test
+    public void test14() throws Exception {
+
+        Function f = new Function("test", "1", "L4", "1,3/2,5/3,8/4,12");
+        assertEquals(f.evaluate(), 3f);
+    }
+
+    @Test
+    public void test15() throws Exception {
+
+        Function f = new Function("test", "4", "L4", "1,3/2,5/3,8/4,12");
+        assertEquals(f.evaluate(), 12f);
+    }
+
+    @Test
+    public void test16() throws Exception {
+
+        Function f = new Function("test", "20", "L4", "1,3/2,5/3,8/4,12");
+        assertEquals(f.evaluate(), 0f);
+    }
+
+    @Test
+    public void test17() throws Exception {
+
+        Function f = new Function("test", "RN1", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");        
+        Float result = f.evaluate();        
+        assertTrue(result >= 1f && result <= 5f);
+    }
+    
+    @Test
+    public void test18() throws Exception {
+
+        Function f = new Function("test", "RN5", "D5", "1,1/2,2/3,3/4,4/5,5");        
+        Float result = f.evaluate();        
+        assertTrue(result >= 1f && result <= 5f);
     }
 }

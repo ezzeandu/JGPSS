@@ -90,6 +90,7 @@ public class VarGlobals implements Serializable {
      */
     public static String nomStorageSeleccionat;
     
+    public static String nameFunctionSelected;
     
     public static String nameSaveValueSelected;
     

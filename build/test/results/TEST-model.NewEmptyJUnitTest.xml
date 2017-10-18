@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="MacBook-Pro-2.local" name="model.entities.FunctionTest" skipped="0" tests="18" time="0.393" timestamp="2017-10-17T21:11:09">
+<testsuite errors="0" failures="0" hostname="MacBook-Pro-2.local" name="model.NewEmptyJUnitTest" skipped="0" tests="1" time="0.31" timestamp="2017-10-17T18:44:24">
   <properties>
     <property name="libs.jsp-compiler.javadoc" value="" />
     <property name="netbeans.autoupdate.country" value="ES" />
@@ -8,7 +8,7 @@
     <property name="libs.jsf20.maven-pom" value="" />
     <property name="libs.DataBindingME.src" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/mobility/sources/netbeans_databindingme-src.zip" />
     <property name="libs.spring-webmvc4.0.src" value="" />
-    <property name="javac.includes" value="model/entities/FunctionTest.java" />
+    <property name="javac.includes" value="model/NewEmptyJUnitTest.java" />
     <property name="ant.core.lib" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant.jar" />
     <property name="javadoc.windowtitle" value="JGPSS" />
     <property name="libs.jsp-compilation.javadoc" value="" />
@@ -40,7 +40,7 @@
     <property name="libs.hamcrest.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/hamcrest-core-1.3.jar" />
     <property name="libs.javac-api.javadoc" value="" />
     <property name="os.name" value="Mac OS X" />
-    <property name="test.class" value="model.entities.FunctionTest" />
+    <property name="test.class" value="model.NewEmptyJUnitTest" />
     <property name="libs.beans-binding.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/beansbinding-1.2.1.jar" />
     <property name="libs.javaee-endorsed-api-7.0.maven-pom" value="" />
     <property name="ap.proc.none.internal" value="" />
@@ -62,7 +62,7 @@
     <property name="libs.j2me_common_ant.maven-pom" value="" />
     <property name="libs.spring-webmvc3.0.maven-pom" value="" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner model.entities.FunctionTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/eZe/Repositorios/JGPSS/JGPSS/build/test/results/TEST-model.entities.FunctionTest.xml crashfile=/Users/eZe/Repositorios/JGPSS/JGPSS/build/junitvmwatcher4061945223040932560.properties propsfile=/Users/eZe/Repositorios/JGPSS/JGPSS/build/junit7698633056576219848.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner model.NewEmptyJUnitTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/eZe/Repositorios/JGPSS/JGPSS/build/test/results/TEST-model.NewEmptyJUnitTest.xml crashfile=/Users/eZe/Repositorios/JGPSS/JGPSS/build/junitvmwatcher2197563598083900133.properties propsfile=/Users/eZe/Repositorios/JGPSS/JGPSS/build/junit6713378561163272512.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="jnlp.descriptor" value="application" />
@@ -90,7 +90,7 @@
     <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/endorsed" />
     <property name="ant.file.JGPSS" value="/Users/eZe/Repositorios/JGPSS/JGPSS/build.xml" />
     <property name="libs.groovy-all.src" value="" />
-    <property name="test.includes" value="model/entities/FunctionTest.java" />
+    <property name="test.includes" value="model/NewEmptyJUnitTest.java" />
     <property name="addExports:java.desktop/com.apple.eawt" value="ALL-UNNAMED" />
     <property name="netbeans.dynamic.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/asm-all-5.0.1.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/core-base.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/core.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/org-netbeans-libs-asm.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/org-openide-filesystems-compat8.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/org-openide-filesystems.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core-base_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core-base_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core-base_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core-base_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/core_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-netbeans-libs-asm_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-netbeans-libs-asm_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-netbeans-libs-asm_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-netbeans-libs-asm_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems-compat8_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems-compat8_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems-compat8_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems-compat8_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/core/locale/org-openide-filesystems_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/org-netbeans-upgrader.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/core_nb.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/core_nb_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/core_nb_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/core_nb_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/core_nb_zh_CN.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/org-netbeans-upgrader_ja.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/org-netbeans-upgrader_pt_BR.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/org-netbeans-upgrader_ru.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb/core/locale/org-netbeans-upgrader_zh_CN.jar" />
     <property name="jnlp.enabled" value="false" />
@@ -114,7 +114,7 @@
     <property name="javac.debug" value="true" />
     <property name="javadoc.splitindex" value="true" />
     <property name="file.separator" value="/" />
-    <property name="javac.includesfile.binary" value="/Users/eZe/Repositorios/JGPSS/JGPSS/null996820940" />
+    <property name="javac.includesfile.binary" value="/Users/eZe/Repositorios/JGPSS/JGPSS/null303309255" />
     <property name="libs.junit_4.maven-pom" value="" />
     <property name="mkdist.disabled" value="false" />
     <property name="javac.test.processorpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/AbsoluteLayout.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/swing-layout-1.0.4.jar:lib/lombok.jar:lib/uncommons-maths-1.2.3.jar:lib/itext5-itext-pdfa-5.5.12.jar:lib/itext5-itext-xtra-5.5.12.jar:lib/itext5-itextpdf-5.5.12.jar:lib/itext5-xmlworker-5.5.12.jar:build/classes:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.12.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/hamcrest-core-1.3.jar" />
@@ -127,7 +127,7 @@
     <property name="libs.hibernate4-persistencemodelgen.javadoc" value="" />
     <property name="libs.jaxb.javadoc" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/docs/jaxb-api-doc.zip" />
     <property name="libs.struts.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/antlr-2.7.2.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/bsf-2.3.0.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-beanutils-1.8.0.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-chain-1.2.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-digester-1.8.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-fileupload-1.1.1.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-io-1.1.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-logging-1.0.4.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/commons-validator-1.3.1.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/jstl-1.0.2.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/oro-2.0.8.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/standard-1.0.6.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-core-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-el-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-extras-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-faces-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-mailreader-dao-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-scripting-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-taglib-1.3.10.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/modules/ext/struts/struts-tiles-1.3.10.jar" />
-    <property name="javac.includes.binary" value="/Users/eZe/Repositorios/JGPSS/JGPSS/build/test/classes/model/entities/FunctionTest.class" />
+    <property name="javac.includes.binary" value="/Users/eZe/Repositorios/JGPSS/JGPSS/build/test/classes/model/NewEmptyJUnitTest.class" />
     <property name="ant.home" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant" />
     <property name="libs.junit_4.src" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/docs/junit-4.12-sources.jar" />
     <property name="libs.testng.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/testng-6.8.1-dist.jar" />
@@ -448,24 +448,8 @@
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
     <property name="libs.javaee-web-api-7.0.javadoc" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise/docs/javaee-doc-api.jar" />
   </properties>
-  <testcase classname="model.entities.FunctionTest" name="test10" time="0.186" />
-  <testcase classname="model.entities.FunctionTest" name="test11" time="0.006" />
-  <testcase classname="model.entities.FunctionTest" name="test12" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test13" time="0.002" />
-  <testcase classname="model.entities.FunctionTest" name="test14" time="0.003" />
-  <testcase classname="model.entities.FunctionTest" name="test15" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test16" time="0.004" />
-  <testcase classname="model.entities.FunctionTest" name="test17" time="0.005" />
-  <testcase classname="model.entities.FunctionTest" name="test18" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test1" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test2" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test3" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test4" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test5" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test6" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test7" time="0.001" />
-  <testcase classname="model.entities.FunctionTest" name="test8" time="0.0" />
-  <testcase classname="model.entities.FunctionTest" name="test9" time="0.0" />
-  <system-out><![CDATA[]]></system-out>
+  <testcase classname="model.NewEmptyJUnitTest" name="test" time="0.155" />
+  <system-out><![CDATA[[1, 2, 3, 4, 5]
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

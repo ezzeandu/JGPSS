@@ -353,7 +353,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                 abrirModel();
             }
         } catch (IOException e) {
-            mostrarDialogo(Constants.Si, Constants.cancel, e.getMessage(), Constants.ERROR_OPENING_FILE);            
+            mostrarDialogo(Constants.Si, Constants.cancel, e.getMessage(), Constants.ERROR_OPENING_FILE);
         }
     }//GEN-LAST:event_ObrirModelActionPerformed
 
@@ -388,7 +388,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
         );
         return sel;
     }
-    
+
     private void SaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAsActionPerformed
 
         guardarComo();
@@ -406,7 +406,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             guardar();
         }
     }
-    
+
     private void NewModelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewModelMouseClicked
 
     }//GEN-LAST:event_NewModelMouseClicked
@@ -480,7 +480,10 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }//GEN-LAST:event_ConfigurationActionPerformed
 
     private void FunctionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FunctionsActionPerformed
-        // TODO add your handling code here:
+
+        FunctionView fv = new FunctionView(this, false);
+        fv.setLocationRelativeTo(this);
+        fv.setVisible(true);
 }//GEN-LAST:event_FunctionsActionPerformed
 
     private void MatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MatrixActionPerformed
