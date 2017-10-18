@@ -22,6 +22,7 @@ import java.util.PriorityQueue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -141,14 +142,14 @@ public class Funavail extends Bloc {
     public Bloc execute(Xact tr) throws Exception {
 
         incTrans(tr);
-        String facilityName = getModel().evaluateExpression(A, tr);
+        String facilityName = evaluate(A, getModel(), tr);
         Facility facilityState = getModel().getFacilities().get(facilityName);
         facilityState.setAvailable(false);
 
         Xact owningXact = facilityState.getOwningXact();
 
-        Bloc destinationB = getProces().findBloc(getModel().evaluateExpression(C, tr));
-        Bloc destinationF = getProces().findBloc(getModel().evaluateExpression(F, tr));
+        Bloc destinationB = getProces().findBloc(evaluate(C, getModel(), tr));
+        Bloc destinationF = getProces().findBloc(evaluate(F, getModel(), tr));
 
         /**
          * The transactions are removed from contention for the facility
@@ -214,7 +215,7 @@ public class Funavail extends Bloc {
          */
         if (getModel().getFEC().contains(owningXact)) {
 
-            String residualTimeName = getModel().evaluateExpression(D, tr);
+            String residualTimeName = evaluate(D, getModel(), tr);
 
             if (C.isEmpty()) {
                 tr.restore(true);

@@ -148,7 +148,7 @@ public class BlockDescriptionView extends JDialog {
                 TextF.setVisible(false);
                 break;
             case Constants.idDepart:
-            case Constants.idQueue:               
+            case Constants.idQueue:
             case Constants.idAssign:
             case Constants.idLoop:
                 jLabelA.setText(Constants.A);
@@ -261,9 +261,9 @@ public class BlockDescriptionView extends JDialog {
             case Constants.idGenerate:
                 Generate g = (Generate) b;
                 jLabelA.setText(Constants.A);
-                textA.setText(Float.toString(g.getA()));
+                textA.setText(g.getA());
                 jLabelB.setText(Constants.B);
-                TextB.setText(Float.toString(g.getB()));
+                TextB.setText(g.getB());
                 jLabelC.setText(Constants.C);
                 TextC.setText(Float.toString(g.getC()));
                 jLabelD.setText(Constants.C);
@@ -380,8 +380,8 @@ public class BlockDescriptionView extends JDialog {
                 jLabelA.setText(Constants.A);
                 jLabelB.setText(Constants.B);
                 Advance a = (Advance) b;
-                textA.setText(Float.toString(a.getA()));
-                TextB.setText(Float.toString(a.getB()));
+                textA.setText(a.getA());
+                TextB.setText(a.getB());
                 TextC.setVisible(false);
                 TextD.setVisible(false);
                 TextE.setVisible(false);
@@ -1077,8 +1077,8 @@ public class BlockDescriptionView extends JDialog {
     private void buttonAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAActionPerformed
 
         switch (VarGlobals.blocId) {
-            
-            case Constants.idRelease:                
+
+            case Constants.idRelease:
                 openSeizeView();
                 break;
             case Constants.idEnter:
@@ -1138,7 +1138,6 @@ public class BlockDescriptionView extends JDialog {
                 .filter(b -> b instanceof Seize)//    
                 .map(b -> (Seize) b)
                 .collect(Collectors.toList());
-                
 
         if (seizes.isEmpty()) {
             generarPantallaError("No Seizes defined");
@@ -1170,8 +1169,8 @@ public class BlockDescriptionView extends JDialog {
                     gna = VarGlobals.getGNA(gnaType);
 
                     g = new Generate(textDescripcio.getText(), jTextFielLabel.getText(),
-                            Float.valueOf(textA.getText()),
-                            Float.valueOf(TextB.getText()),
+                            textA.getText(),
+                            TextB.getText(),
                             Float.valueOf(TextC.getText()),
                             Float.valueOf(TextD.getText()),
                             Float.valueOf(TextE.getText()),
@@ -1199,8 +1198,8 @@ public class BlockDescriptionView extends JDialog {
                     gna = VarGlobals.getGNA(gnaType);
 
                     a = new Advance(textDescripcio.getText(), jTextFielLabel.getText(),
-                            Float.valueOf(textA.getText()),
-                            Float.valueOf(TextB.getText()), gna);
+                            textA.getText(),
+                            TextB.getText(), gna);
                     a.setModel(model);
                     a.setProces(proces);
                     VarGlobals.bloc = a;

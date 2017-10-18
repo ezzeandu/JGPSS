@@ -772,6 +772,7 @@ public class Constants {
     public final static String REAL = "REAL";
     public final static String STRING = "STRING";
     
+    
 
     /**
      * New instance of constants.

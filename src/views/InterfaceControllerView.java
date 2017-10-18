@@ -18,7 +18,8 @@
  */
 package views;
 
-import exceptions.UnrecognizedModel;
+import exceptions.MalformedFunctionDistributionException;
+import exceptions.UnrecognizedModelException;
 import java.io.*;
 import java.awt.*;
 import javax.swing.*;
@@ -352,7 +353,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             } else {
                 abrirModel();
             }
-        } catch (IOException e) {
+        } catch (MalformedFunctionDistributionException | IOException e) {
             mostrarDialogo(Constants.Si, Constants.cancel, e.getMessage(), Constants.ERROR_OPENING_FILE);
         }
     }//GEN-LAST:event_ObrirModelActionPerformed
@@ -687,7 +688,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
         }
     }
 
-    private void abrirModel() throws IOException {
+    private void abrirModel() throws IOException, MalformedFunctionDistributionException {
         VarGlobals.Abrir = true;
         JFileChooser fc = new JFileChooser(System.getProperty("user.dir"));
         FileFilterTxt filter = new FileFilterTxt();
@@ -718,7 +719,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                         PanelModelView jp = new PanelModelView(this);
                         this.obrirJPanel(jp);
 
-                    } catch (UnrecognizedModel e) {
+                    } catch (UnrecognizedModelException e) {
                         generarPantallaError(e.getMessage());
                     }
                 } else {

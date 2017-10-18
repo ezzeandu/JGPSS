@@ -21,6 +21,7 @@ package model.blocks;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -98,12 +99,12 @@ public class Test extends Bloc {
     }
 
     @Override
-    public Bloc execute(Xact tr) {
+    public Bloc execute(Xact tr) throws Exception {
 
         incTrans(tr);
 
-        Float _A = Float.parseFloat(getModel().evaluateExpression(this.A, tr));
-        Float _B = Float.parseFloat(getModel().evaluateExpression(this.B, tr));
+        Float _A = Float.parseFloat(evaluate(A, getModel(), tr));
+        Float _B = Float.parseFloat(evaluate(B, getModel(), tr));
 
         Bloc nextBloc;
 
@@ -124,7 +125,7 @@ public class Test extends Bloc {
             nextBloc = null;
         }
         return nextBloc;
-    }    
+    }
 
     @Override
     public String name() {

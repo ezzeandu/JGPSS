@@ -32,9 +32,11 @@ package model.blocks;
  * A LOOP Block modifies a Parameter and controls the destination of the Active
  * Transaction based on the result.
  */
+import exceptions.ParameterNotANumberException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -85,11 +87,23 @@ public class Loop extends Bloc {
         try {
 
             incTrans(tr);
+
+            Integer counter;
             
-            Integer counter = (Integer) tr.getParameter("loop-counter");
+            try {
+                counter = Integer.valueOf(tr.getParameter("loop-counter").toString());
+            } catch (NumberFormatException e) {
+                throw new ParameterNotANumberException("loop-counter");            
+            }
 
             if (counter == null) {
-                counter = Integer.parseInt(getModel().evaluateExpression(A, tr));
+
+                try {
+                    counter = Integer.valueOf(evaluate(A, getModel(), tr));
+                } catch (NumberFormatException e) {
+                    throw new ParameterNotANumberException(A);                
+                }
+
                 counter--;
                 tr.getTransactionParameters().put("loop-counter", counter);
                 nextBlock = blocB;
@@ -105,7 +119,7 @@ public class Loop extends Bloc {
             throw new Exception("At Loop Block " + getLabel() + " parameter " + A + " not found");
         }
         return nextBlock;
-    }   
+    }
 
     @Override
     public String name() {

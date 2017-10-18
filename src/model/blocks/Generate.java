@@ -21,6 +21,7 @@ package model.blocks;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 import utils.VarGlobals;
@@ -42,11 +43,11 @@ public class Generate extends Bloc {
     //Intergeneration time.
     @Getter
     @Setter
-    private float A;
+    private String A;
     //Halfrange or Function Modifier.
     @Getter
     @Setter
-    private float B;
+    private String B;
     //Start delay time.
     @Getter
     @Setter
@@ -80,7 +81,7 @@ public class Generate extends Bloc {
      * @param F if 0 the parameter C is ignored.
      * @param gna
      */
-    public Generate(String comentari, String label, Float A, Float B, Float C, Float D, Float E, int F, RNG gna) {
+    public Generate(String comentari, String label, String A, String B, Float C, Float D, Float E, int F, RNG gna) {
 
         super(Constants.idGenerate, label, comentari, gna);
         this.A = A;
@@ -100,9 +101,13 @@ public class Generate extends Bloc {
     }
 
     @Override
-    public Bloc execute(Xact tr) {
+    public Bloc execute(Xact tr) throws Exception {
 
         if ((creationLimit && creationLimitNumber > 0) || !creationLimit) {
+
+            Float evalA = Float.valueOf(evaluate(A, getModel(), tr));
+            Float evalB = Float.valueOf(evaluate(B, getModel(), tr));
+
             Xact xact;
             xact = new Xact();
             xact.setBloc(this);
@@ -114,7 +119,7 @@ public class Generate extends Bloc {
             if (getModel().getRelativeClock() == 0 && F > 0) {
                 xact.setMoveTime(C);
             } else {
-                xact.setMoveTime(getModel().getRelativeClock() + getGna().generate(A, B));
+                xact.setMoveTime(getModel().getRelativeClock() + getGna().generate(evalA, evalB));
             }
             getModel().incIdXact();
             xact.setID(getModel().getIdxact());

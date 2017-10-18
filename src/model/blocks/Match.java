@@ -21,6 +21,7 @@ package model.blocks;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -81,7 +82,7 @@ public class Match extends Bloc {
     @Override
     public Bloc execute(Xact tr) throws Exception {
 
-        Match matchBlock = (Match) getProces().findBloc(getModel().evaluateExpression(A, tr));
+        Match matchBlock = (Match) getProces().findBloc(evaluate(A, getModel(), tr));
 
         if (matchBlock == null) {
 

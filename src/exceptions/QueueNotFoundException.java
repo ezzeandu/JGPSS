@@ -22,25 +22,12 @@ package exceptions;
  *
  * @author Ezequiel Andujar Montes
  */
-public class UnrecognizedModel extends Exception {
+public class QueueNotFoundException extends Exception{
 
     private static final long serialVersionUID = 1L;
     
-    /**
-     * Creates a new instance of <code>NewException</code> without detail
-     * message.
-     */
-    public UnrecognizedModel() {
-        super("Not a valid JGPSS model format");
-    }
-
-    /**
-     * Constructs an instance of <code>NewException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public UnrecognizedModel(String msg) {
-        super(msg);
-    }
+    public QueueNotFoundException(String queue) {        
+        
+        super(String.format("Queue %s not found", queue));        
+    }    
 }

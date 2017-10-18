@@ -18,6 +18,13 @@
  */
 package model;
 
+import exceptions.FacilityNotFoundException;
+import exceptions.FunctionNotFoundException;
+import exceptions.ModelSyntaxException;
+import exceptions.ParameterNotFoundException;
+import exceptions.QueueNotFoundException;
+import exceptions.SaveValueNotFoundException;
+import exceptions.StorageNotFoundException;
 import model.entities.QueueReport;
 import model.entities.Storage;
 import model.entities.Xact;
@@ -32,6 +39,7 @@ import lombok.Setter;
 import model.entities.AmperVariable;
 import model.entities.Function;
 import model.entities.SaveValue;
+import model.entities.rng.Uniform;
 import utils.Constants;
 
 /**
@@ -50,15 +58,18 @@ public final class Model implements Serializable {
 
     static final long serialVersionUID = 42L;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String name;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String description;
     private ArrayList<Proces> proces;
     private ArrayList<Storage> storages;
     private ArrayList<SaveValue> saveValues;
     private ArrayList<Function> functions;
-    @Getter @Setter
+    @Getter
+    @Setter
     private ArrayList<AmperVariable<?>> amperVariables;
     private ArrayList<Matrix<Float>> matrix;
 
@@ -202,135 +213,6 @@ public final class Model implements Serializable {
             }
         }
         return 1;
-    }
-
-    /**
-     * Evaluates the Expression A associated with a String, a Number or an SNA
-     *
-     * @param A
-     * @param tr
-     * @return
-     */
-    public String evaluateExpression(String A, Xact tr) {
-
-        String _A = "";
-
-        // Value of the relative Clock
-        if (A.equals("C1")) {
-            _A = String.valueOf(relativeClock);
-        } // The Xact Assembly Set
-        else if (A.equals("A1")) {
-            _A = String.valueOf(tr.getAssemblySet());
-        } // Value of the absolute Clock
-        else if (A.equals("AC1")) {
-            _A = String.valueOf(absoluteClock);
-        } // Remaining termination count
-        else if (A.equals("TG1")) {
-            _A = String.valueOf(TC);
-        } // Active Transaction number
-        else if (A.equals("XN1")) {
-            _A = String.valueOf(tr.getID());
-        } // Transit time returns the absolute system clock minus the "Mark Time" of the Transaction
-        else if (A.startsWith("M1")) {
-            return String.valueOf(absoluteClock - tr.getMoveTime());
-        } // Transactions priority
-        else if (A.startsWith("PR")) {
-            return String.valueOf(tr.getPriority());
-        } // Block entry count
-        else if (A.startsWith("N$")) {
-            _A = String.valueOf(findBloc(tr.getBloc().getLabel()).getEntryCount());
-        } // Transaction parameter
-        else if (A.startsWith("P$")) {
-            String parameterName = A.split("P$")[1];
-            _A = String.valueOf(tr.getParameter(parameterName));
-        } // Facility Bussy
-        else if (A.startsWith("F$")) {
-            String facilityName = A.split("F$")[1];
-            boolean available = facilities.get(facilityName).isAvailable();
-            _A = available ? "1" : "0";
-        } // Facility Capture Count
-        else if (A.startsWith("FC$")) {
-            String facilityName = A.split("F$")[1];
-            _A = String.valueOf(facilities.get(facilityName).getCaptureCount());
-        } // Facility Capture Count
-        else if (A.startsWith("FN$")) {
-            String facilityName = A.split("F$")[1];
-            // Not implemented yet
-        } // Transit Time. Current absolute system clock value minus value in Parameter Parameter
-        else if (A.startsWith("MP$")) {
-            float parameter = Float.parseFloat(A.split("MP$")[1]);
-            _A = String.valueOf(absoluteClock - parameter);
-        } // Current count value of the queue
-        else if (A.startsWith("Q$")) {
-            String queue = A.split("Q$")[1];
-            _A = String.valueOf(queues.get(queue).getCurrentCount());
-        } // Average queue content 
-        else if (A.startsWith("QA$")) {
-            String queue = A.split("QA$")[1];
-            _A = String.valueOf(queues.get(queue).getAvgContent());
-        } // Queue total entries
-        else if (A.startsWith("QC$")) {
-            String queue = A.split("QC$")[1];
-            _A = String.valueOf(queues.get(queue).getTotalEntries());
-        } // Queue max length
-        else if (A.startsWith("QM$")) {
-            String queue = A.split("QM$")[1];
-            _A = String.valueOf(queues.get(queue).getMaxCount());
-        } // Average Queue residence time
-        else if (A.startsWith("QT$")) {
-            String queue = A.split("QT$")[1];
-            _A = String.valueOf(queues.get(queue).getAvgTime());
-        } // Average Queue residence time excluding zero entries
-        else if (A.startsWith("QX$")) {
-            String queue = A.split("QX$")[1];
-            _A = String.valueOf(queues.get(queue).getAvgTime(true));
-        } // Queue zero entry count
-        else if (A.startsWith("QZ$")) {
-            String queue = A.split("QZ$")[1];
-            _A = String.valueOf(queues.get(queue).getZeroEntries());
-        } // Available storage capacity
-        else if (A.startsWith("R$")) {
-            String storage = A.split("R$")[1];
-            _A = String.valueOf(facilities.get(storage).getAvailableCapacity());
-
-            // Returns a random value between 0-999
-        } else if (A.startsWith("RN")) {
-            Random rnd = new Random();
-            _A = String.valueOf(rnd.nextFloat() * 999);
-        } // Float value of the string
-        // Storage in use
-        else if (A.startsWith("S$")) {
-
-            String storage = A.split("S$")[1];
-            _A = String.valueOf(facilities.get(storage).getCaptureCount());
-
-        } // Average storage in use
-        else if (A.startsWith("SA$")) {
-
-            String storage = A.split("SA$")[1];
-            _A = String.valueOf(facilities.get(storage).avgHoldingTime());
-
-        } // Storage empty
-        else if (A.startsWith("SE$")) {
-            String storage = A.split("SE$")[1];
-            _A = facilities.get(storage).getCapturingTransactions() == 0 ? "1" : "0";
-        } // Storage full
-        else if (A.startsWith("SM$")) {
-            String storage = A.split("SM$")[1];
-            _A = !facilities.get(storage).isAvailable() ? "1" : "0";
-        } // Value of SaveValue entity
-        else if (A.startsWith("X$")) {
-
-            _A = saveValues.stream()//
-                    .filter(sv -> sv.getName().equals(A.split("X$")[1]))//
-                    .map(sv -> String.valueOf(sv.getValue()))//
-                    .findFirst()//
-                    .orElse("0.0");
-
-        } else {
-            _A = A;
-        }
-        return _A;
     }
 
     /**
@@ -491,7 +373,7 @@ public final class Model implements Serializable {
                 } while (xactB != null);
             }
         });
-    }  
+    }
 
     /**
      * Updates the current count of the Blocs that has xact left

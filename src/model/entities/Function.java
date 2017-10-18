@@ -18,7 +18,7 @@
  */
 package model.entities;
 
-import exceptions.MalformedFunctionDistribution;
+import exceptions.MalformedFunctionDistributionException;
 import java.util.ArrayList;
 import javafx.util.Pair;
 import lombok.Data;
@@ -44,7 +44,7 @@ public class Function {
     public final static String L = "L";
     public final static String M = "M"; // Not implemented
 
-    public Function(String name, String A, String B, String d) throws MalformedFunctionDistribution {
+    public Function(String name, String A, String B, String d) throws MalformedFunctionDistributionException {
 
         this.name = name;
         this.A = A; 
@@ -53,13 +53,13 @@ public class Function {
         this.distributionSize = evaluateFunctionType(B).getValue();
     }
 
-    public Float evaluate() throws MalformedFunctionDistribution {
+    public Float evaluate() throws MalformedFunctionDistributionException {
 
         Float result = 0f;        
         Pair<String, Integer> type = evaluateFunctionType(B);
-        int distributionSize = type.getValue();
+        int distrSize = type.getValue();
         Float Aeval = evaluateParameter(A);
-        ArrayList<Pair<Float, Float>> dist = evaluateDistribution(distribution, distributionSize);
+        ArrayList<Pair<Float, Float>> dist = evaluateDistribution(distribution, distrSize);
         
         switch (type.getKey()) {
             case C:
@@ -143,20 +143,20 @@ public class Function {
         return 0f;
     }
 
-    private ArrayList<Pair<Float, Float>> evaluateDistribution(String d, int distributionSize) throws MalformedFunctionDistribution {
+    private ArrayList<Pair<Float, Float>> evaluateDistribution(String d, int distributionSize) throws MalformedFunctionDistributionException {
 
         ArrayList<Pair<Float, Float>> dist = new ArrayList<>();
 
         String[] pairs = d.split("/");
 
         if (pairs.length == 0 || pairs.length != distributionSize) {
-            throw new MalformedFunctionDistribution();
+            throw new MalformedFunctionDistributionException();
         }
 
         for (String pair : pairs) {
             String[] values = pair.split(",");
             if (values.length != 2) {
-                throw new MalformedFunctionDistribution();
+                throw new MalformedFunctionDistributionException();
             }
             try {
 
@@ -165,31 +165,31 @@ public class Function {
                 dist.add(new Pair<>(x, y));
 
             } catch (NumberFormatException e) {
-                throw new MalformedFunctionDistribution();
+                throw new MalformedFunctionDistributionException();
             }
         }
         return dist;
     }
 
-    private Pair<String, Integer> evaluateFunctionType(String t) throws MalformedFunctionDistribution {
+    private Pair<String, Integer> evaluateFunctionType(String t) throws MalformedFunctionDistributionException {
 
         Integer size;
         String type;
 
         if (!t.matches("[CDL0-9]+")) {
-            throw new MalformedFunctionDistribution();
+            throw new MalformedFunctionDistributionException();
         }
 
         try {
             size = Integer.valueOf(t.split("^[A-Z]+")[1]);
         } catch (NumberFormatException e) {
-            throw new MalformedFunctionDistribution();
+            throw new MalformedFunctionDistributionException();
         }
         type = t.substring(0, 1);
         return new Pair<>(type, size);
     }
 
-    private Float evaluateParameter(String A) throws MalformedFunctionDistribution {
+    private Float evaluateParameter(String A) throws MalformedFunctionDistributionException {
 
         Float f = new Float(0);
 
@@ -200,7 +200,7 @@ public class Function {
                 n = Integer.valueOf(A.split("RN")[1]);
             }
             catch(NumberFormatException e) {
-                throw new MalformedFunctionDistribution();
+                throw new MalformedFunctionDistributionException();
             }
 
             f = new Uniform().generate(n, 0);
@@ -209,7 +209,7 @@ public class Function {
             try {
                 f = Float.parseFloat(A);
             } catch (NumberFormatException e) {
-                throw new MalformedFunctionDistribution();
+                throw new MalformedFunctionDistributionException();
             }
         }
         return f;

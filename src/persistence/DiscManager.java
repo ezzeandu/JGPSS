@@ -22,7 +22,8 @@ package persistence;
  * Autor: Francisco G�mez Gonz�lez Cluster: 2 Grupo: 2.2 Versi�n: 1.0
  * Fecha: 04-11-05
  */
-import exceptions.UnrecognizedModel;
+import exceptions.MalformedFunctionDistributionException;
+import exceptions.UnrecognizedModelException;
 import model.Proces;
 import model.entities.Storage;
 import model.blocks.*;
@@ -30,10 +31,10 @@ import utils.VarGlobals;
 import utils.Constants;
 import java.io.*;
 import java.util.ArrayList;
-import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import model.*;
 import model.entities.AmperVariable;
+import model.entities.Function;
 import model.entities.SaveValue;
 import model.entities.rng.RNG;
 
@@ -60,7 +61,7 @@ public class DiscManager {
      */
     public void guardaObjeto(Object o, String nomFichero) throws IOException, FileNotFoundException {
         ObjectOutputStream oos;
-        oos  = new ObjectOutputStream(new FileOutputStream(nomFichero));
+        oos = new ObjectOutputStream(new FileOutputStream(nomFichero));
         oos.writeObject(o);
         oos.close();
     }
@@ -80,15 +81,15 @@ public class DiscManager {
         return ois.readObject();
     }
 
-    public void guardarTxt(String url) throws IOException {        
+    public void guardarTxt(String url) throws IOException {
         FileWriter guardx;
         guardx = new FileWriter(url);
         guardx.write(generarTxt());
-        guardx.close();        
+        guardx.close();
     }
 
     private String generarTxt() throws IOException {
-        String texto = null;
+
         Model model = VarGlobals.model;
         StringBuffer textModel;
         textModel = new StringBuffer();
@@ -97,6 +98,7 @@ public class DiscManager {
         writeStorages(model, textModel);
         writeSaveValues(model, textModel);
         writeAmperVariables(model, textModel);
+        writeFunctions(model, textModel);
         writeEndEntities(textModel);
         writeProcess(model, textModel);
 
@@ -107,8 +109,6 @@ public class DiscManager {
 
         StringBuilder bufBloc = new StringBuilder();
         String gnaName;
-        //segons el bloc escriurem una cosa o una altre
-        //bufBloc.append(Constants.cincoEspacios);
         int id = b.getId();
         int espacios;
         bufBloc.append(b.getLabel());
@@ -131,9 +131,9 @@ public class DiscManager {
                 gnaName = g.getGna().name();
                 bufBloc.append(gnaName);
                 bufBloc.append(Constants.coma);
-                bufBloc.append(Float.toString(g.getA()));
+                bufBloc.append(g.getA());
                 bufBloc.append(Constants.coma);
-                bufBloc.append(Float.toString(g.getB()));
+                bufBloc.append(g.getB());
                 bufBloc.append(Constants.coma);
                 bufBloc.append(Float.toString(g.getC()));
                 bufBloc.append(Constants.coma);
@@ -194,9 +194,9 @@ public class DiscManager {
 
                 bufBloc.append(a.getGna().name());
                 bufBloc.append(Constants.coma);
-                bufBloc.append(Float.toString(a.getA()));
+                bufBloc.append(a.getA());
                 bufBloc.append(Constants.coma);
-                bufBloc.append(Float.toString(a.getB()));
+                bufBloc.append(a.getB());
                 break;
             case Constants.idAssign:
                 Assign as = (Assign) b;
@@ -473,11 +473,11 @@ public class DiscManager {
         return bufBloc.toString();
     }
 
-    public void recuperarTxt(BufferedReader entrada) throws UnrecognizedModel, IOException {
+    public void recuperarTxt(BufferedReader entrada) throws UnrecognizedModelException, IOException, MalformedFunctionDistributionException {
         txtToModel(entrada);
     }
 
-    private void txtToModel(BufferedReader entrada) throws UnrecognizedModel, IOException {
+    private void txtToModel(BufferedReader entrada) throws UnrecognizedModelException, IOException, MalformedFunctionDistributionException {
         Model m = new Model();
         setGPSSmodel(m);
         ArrayList<Proces> p = new ArrayList<>();
@@ -485,6 +485,7 @@ public class DiscManager {
         ArrayList<SaveValue> saveValues = new ArrayList<>();
         ArrayList<AmperVariable<?>> amperVariables = new ArrayList<>();
         ArrayList<Bloc> blocs = new ArrayList<>();
+        ArrayList<Function> functions = new ArrayList<>();
         String nomModel = "";
         String descModel = "";
         String nomProces = "";
@@ -505,18 +506,18 @@ public class DiscManager {
                 case 1:
                 case 4:
                     if (!s.equals(Constants.asterisco)) {
-                        throw new UnrecognizedModel();
+                        throw new UnrecognizedModelException();
                     }
                     break;
                 case 2:
                     if (!s.substring(0, 1).equals(Constants.asterisco)) {
-                        throw new UnrecognizedModel();
+                        throw new UnrecognizedModelException();
                     }
                     nomModel = s.substring(2);
                     break;
                 case 3:
                     if (!s.substring(0, 1).equals(Constants.asterisco)) {
-                        throw new UnrecognizedModel();
+                        throw new UnrecognizedModelException();
                     }
                     descModel = s.substring(2);
                     break;
@@ -535,6 +536,16 @@ public class DiscManager {
                 String entityValue = vEntity[2];
 
                 switch (entityType) {
+
+                    case Constants.FUNCTION:
+
+                        String A = vEntity[2];
+                        String B = vEntity[3];
+                        String dist = vEntity[4];
+                        Function function = new Function(entityName, A, B, dist);
+                        functions.add(function);
+                        break;
+
                     case Constants.INTEGER:
                         Integer iValue = new Integer(entityValue);
                         AmperVariable<Integer> avi = new AmperVariable<>(entityName, iValue);
@@ -558,6 +569,8 @@ public class DiscManager {
                     case Constants.SAVEVALUE:
                         saveValues.add(new SaveValue(entityName, new Float(vEntity[2])));
                         break;
+                    default:
+                        throw new UnrecognizedModelException();                        
                 }
             }
         }
@@ -583,7 +596,7 @@ public class DiscManager {
             } else {
 
                 if ((cont == 1) && !s.equals(Constants.asterisco)) {
-                    throw new UnrecognizedModel();
+                    throw new UnrecognizedModelException();
                 } else if ((cont == 2)) {
                     nomProces = s.substring(2);
                     pro.setDescpro(nomProces);
@@ -602,6 +615,7 @@ public class DiscManager {
         m.setProces(p);
         m.setStorages(storages);
         m.setSaveValues(saveValues);
+        m.setFunctions(functions);
         m.setAmperVariables(amperVariables);
         VarGlobals.model = m;
 
@@ -633,8 +647,8 @@ public class DiscManager {
                 RNG gna = VarGlobals.getGNA(valors[0]);
                 Advance a = new Advance(
                         strComentari, strLabel,
-                        Float.valueOf(valors[1]),
-                        Float.valueOf(valors[2]),
+                        valors[1],
+                        valors[2],
                         gna);
                 b = a;
                 break;
@@ -663,8 +677,8 @@ public class DiscManager {
             case Constants.Generate:
                 Generate g = new Generate(
                         strComentari, strLabel,
-                        Float.valueOf(valors[1]),
-                        Float.valueOf(valors[2]),
+                        valors[1],
+                        valors[2],
                         Float.valueOf(valors[3]),
                         Float.valueOf(valors[4]),
                         Float.valueOf(valors[5]),
@@ -964,6 +978,28 @@ public class DiscManager {
             textModel.append(amperVariableType);
             textModel.append(Constants.espacio);
             textModel.append(av.getValue());
+            textModel.append(Constants.saltoLinea);
+
+        });
+    }
+
+    private void writeFunctions(Model model, StringBuffer textModel) {
+
+        if (model.getFunctions().isEmpty()) {
+            return;
+        }
+
+        model.getFunctions().forEach(f -> {
+
+            textModel.append(f.getName());
+            textModel.append(Constants.espacio);
+            textModel.append(Constants.FUNCTION);
+            textModel.append(Constants.espacio);
+            textModel.append(f.getA());
+            textModel.append(Constants.espacio);
+            textModel.append(f.getB());
+            textModel.append(Constants.espacio);
+            textModel.append(f.getDistribution());
             textModel.append(Constants.saltoLinea);
 
         });

@@ -21,6 +21,7 @@ package model.blocks;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -57,7 +58,7 @@ public class Sunavail extends Bloc {
     @Override
     public Bloc execute(Xact tr) throws Exception {
 
-        String facilityName = getModel().evaluateExpression(A, tr);
+        String facilityName = evaluate(A, getModel(), tr);
 
         if (getModel().getFacilities().get(facilityName) == null) {
             getModel().getFacilities().put(facilityName, new Facility(getModel()));

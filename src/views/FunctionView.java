@@ -18,7 +18,7 @@
  */
 package views;
 
-import exceptions.MalformedFunctionDistribution;
+import exceptions.MalformedFunctionDistributionException;
 import java.awt.Frame;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -219,13 +219,12 @@ public class FunctionView extends javax.swing.JDialog {
             String functionName = comboFunctions.getSelectedItem().toString();
             String A = AValue.getText();
             String B = BValue.getText();
-            String distribution = DistributionLabel.getText();
+            String distribution = DistributionValue.getText();
 
             if (!existsFunction(functionName)) {
 
                 VarGlobals.model.getFunctions().add(new Function(functionName, A, B, distribution));
-                botoOK.setEnabled(true);
-                botoOK.setVisible(true);
+
                 comboFunctions.addItem(functionName);
 
             } else {
@@ -234,14 +233,16 @@ public class FunctionView extends javax.swing.JDialog {
                 functionAux.setB(B);
                 functionAux.setDistribution(distribution);
             }
-        } catch (NumberFormatException | MalformedFunctionDistribution nf) {
-            generarPantallaError(Constants.errorDades);
+            botoOK.setEnabled(true);
+            botoOK.setVisible(true);
+        } catch (NumberFormatException | MalformedFunctionDistributionException e) {
+            generarPantallaError(e.getMessage());
         }
         VarGlobals.esModificat = true;
     }//GEN-LAST:event_botoSaveActionPerformed
 
-    private boolean isValidInput() {        
-        
+    private boolean isValidInput() {
+
         String name = comboFunctions.getSelectedItem().toString();
         String A = AValue.getText();
         String B = BValue.getText();
@@ -273,8 +274,8 @@ public class FunctionView extends javax.swing.JDialog {
     }//GEN-LAST:event_AValueActionPerformed
 
     private void comboFunctionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFunctionsActionPerformed
-       
-        initParameters();        
+
+        initParameters();
     }//GEN-LAST:event_comboFunctionsActionPerformed
 
     @SuppressWarnings("unchecked")

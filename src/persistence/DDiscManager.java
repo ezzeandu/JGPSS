@@ -18,7 +18,8 @@
  */
 package persistence;
 
-import exceptions.UnrecognizedModel;
+import exceptions.MalformedFunctionDistributionException;
+import exceptions.UnrecognizedModelException;
 import utils.Constants;
 import utils.VarGlobals;
 import java.io.*;
@@ -93,10 +94,11 @@ public class DDiscManager implements Serializable {
      * To recover a model from a text file.
      *
      * @param entrada where is the model.
-     * @throws exceptions.UnrecognizedModel
+     * @throws exceptions.UnrecognizedModelException
      * @throws java.io.IOException
+     * @throws exceptions.MalformedFunctionDistributionException
      */
-    public void recuperarTxt(BufferedReader entrada) throws UnrecognizedModel, IOException {
+    public void recuperarTxt(BufferedReader entrada) throws UnrecognizedModelException, IOException, MalformedFunctionDistributionException {
         gD.recuperarTxt(entrada);
     }
 }

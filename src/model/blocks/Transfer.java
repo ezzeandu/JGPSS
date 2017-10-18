@@ -21,6 +21,7 @@ package model.blocks;
 import java.util.PriorityQueue;
 import lombok.Getter;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -302,7 +303,7 @@ public class Transfer extends Bloc {
 
             try {
 
-                float probability = Float.parseFloat(getModel().evaluateExpression(A, tr));
+                float probability = Float.valueOf(evaluate(A, getModel(), tr));
 
                 if (probability > 1) {
                     probability = probability / 1000;

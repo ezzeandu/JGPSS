@@ -18,11 +18,12 @@
  */
 package model.blocks;
 
-import exceptions.UnrecognizedModel;
+import exceptions.UnrecognizedModelException;
 import java.util.PriorityQueue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import static model.SNA.evaluate;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -38,7 +39,6 @@ import utils.Constants;
  *
  * A FAVAIL Block ensures that a Facility Entity is in the available state
  */
-
 @NoArgsConstructor
 public class Favail extends Bloc {
 
@@ -54,10 +54,10 @@ public class Favail extends Bloc {
      * @param A the name of the instalation.
      */
     public Favail(String comentari, String label, String A) {
-        
+
         super(Constants.idFavail, label, comentari);
         this.A = A;
-    }    
+    }
 
     /**
      * To execute the block
@@ -75,17 +75,17 @@ public class Favail extends Bloc {
      * @throws java.lang.Exception
      */
     @Override
-    public Bloc execute(Xact tr) throws Exception{
+    public Bloc execute(Xact tr) throws Exception {
 
-        incTrans(tr);        
-        String facilityName = getModel().evaluateExpression(A, tr);
+        incTrans(tr);
+        String facilityName = evaluate(A, getModel(), tr);
 
         PriorityQueue<Xact> BEC = getModel().getBEC().getOrDefault(facilityName, null);
         PriorityQueue<Xact> preemptedXacts = getModel().getPreemptedXacts().getOrDefault(facilityName, null);
         PriorityQueue<Xact> CEC = getModel().getCEC();
 
         if (getModel().getFacilities().get(facilityName) == null) {
-            throw new UnrecognizedModel("Inexisteng facility " + facilityName);
+            throw new UnrecognizedModelException("Inexisteng facility " + facilityName);
         }
 
         if (getModel().getFacilities().get(facilityName).isAvailable()) {
@@ -100,7 +100,7 @@ public class Favail extends Bloc {
 
         getModel().getFacilities().get(A).setAvailable(true);
         return nextBloc(tr);
-    }   
+    }
 
     @Override
     public String name() {

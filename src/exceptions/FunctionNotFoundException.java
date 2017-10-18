@@ -20,14 +20,13 @@ package exceptions;
 
 /**
  *
- * @author eZe
+ * @author Ezequiel Andujar Montes
  */
-public class FacilityNotExistsException extends Exception {
+public class FunctionNotFoundException extends Exception{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; 
     
-    
-    public FacilityNotExistsException(String msg) {
-        super(msg);
-    }
+    public FunctionNotFoundException(String functionName) {        
+        super(String.format("Function %s not found", functionName));        
+    }    
 }

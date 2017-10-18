@@ -18,7 +18,7 @@
  */
 package model.entities;
 
-import exceptions.MalformedFunctionDistribution;
+import exceptions.MalformedFunctionDistributionException;
 import junit.framework.TestCase;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,41 +60,41 @@ public class FunctionTest extends TestCase {
     }
 
     @Test
-    public void test3() throws MalformedFunctionDistribution {
+    public void test3() throws MalformedFunctionDistributionException {
 
         try {
             Function f = new Function("test", "1", "C6", "1,3/2,5/3,8");
-        } catch (MalformedFunctionDistribution e) {
+        } catch (MalformedFunctionDistributionException e) {
             assertEquals(e.getMessage(), "Malformed function distribution");
         }
     }
 
     @Test
-    public void test4() throws MalformedFunctionDistribution {
+    public void test4() throws MalformedFunctionDistributionException {
 
         try {
             Function f = new Function("test", "1", "C3", "1,3/2,/3,8");
-        } catch (MalformedFunctionDistribution e) {
+        } catch (MalformedFunctionDistributionException e) {
             assertEquals(e.getMessage(), "Malformed function distribution");
         }
     }
 
     @Test
-    public void test5() throws MalformedFunctionDistribution {
+    public void test5() throws MalformedFunctionDistributionException {
 
         try {
             Function f = new Function("test", "1", "C3", "1,3/2,r/3,8");
-        } catch (MalformedFunctionDistribution e) {
+        } catch (MalformedFunctionDistributionException e) {
             assertEquals(e.getMessage(), "Malformed function distribution");
         }
     }
 
     @Test
-    public void test6() throws MalformedFunctionDistribution {
+    public void test6() throws MalformedFunctionDistributionException {
 
         try {
             Function f = new Function("test", "1", "X3", "1,3/2,5/3,8");
-        } catch (MalformedFunctionDistribution e) {
+        } catch (MalformedFunctionDistributionException e) {
             assertEquals(e.getMessage(), "Malformed function distribution");
         }
     }
@@ -106,11 +106,11 @@ public class FunctionTest extends TestCase {
     }
 
     @Test
-    public void test8() throws MalformedFunctionDistribution {
+    public void test8() throws MalformedFunctionDistributionException {
 
         try {
             Function f = new Function("test", "1", "C03", "1,3/2,5/3,8");
-        } catch (MalformedFunctionDistribution e) {
+        } catch (MalformedFunctionDistributionException e) {
             assertEquals(e.getMessage(), "Malformed function distribution");
         }
     }

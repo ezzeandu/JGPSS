@@ -21,6 +21,7 @@ package model.blocks;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import model.SNA;
 import model.entities.Xact;
 import utils.Constants;
 import model.entities.rng.RNG;
@@ -42,11 +43,11 @@ public class Advance extends Bloc {
 
     @Getter
     @Setter
-    private float A;
+    private String A;
 
     @Getter
     @Setter
-    private float B;
+    private String B;
 
     /**
      * Creates a new instance of ADVANCE.
@@ -57,7 +58,7 @@ public class Advance extends Bloc {
      * @param B the B parameter value of the block.
      * @param gna
      */
-    public Advance(String comentari, String label, Float A, Float B, RNG gna) {
+    public Advance(String comentari, String label, String A, String B, RNG gna) {
 
         super(Constants.idAdvanced, label, comentari, gna);
         this.A = A;
@@ -71,16 +72,20 @@ public class Advance extends Bloc {
      * @return this method returns the next block of the transaction active.
      * NULL if is removed from the CEC (ADVANCE, TERMINATE, or bloqued
      * situation).
+     * @throws java.lang.Exception
      */
     @Override
-    public Bloc execute(Xact tr) {
+    public Bloc execute(Xact tr) throws Exception {
 
         incTrans(tr);
+
+        Float evalA = Float.valueOf(SNA.evaluate(A, getModel(), tr));
+        Float evalB = Float.valueOf(SNA.evaluate(B, getModel(), tr));
 
         if (tr.getParameter("residual-time") != null) {
             tr.setMoveTime(getModel().getRelativeClock() + (Float) tr.getParameter("residual-time"));
         } else {
-            tr.setMoveTime(getModel().getRelativeClock() + getGna().generate(A - B, A + B));
+            tr.setMoveTime(getModel().getRelativeClock() + getGna().generate(evalA, evalB));
         }
         if (tr.getBlockRoute() != null) {
             tr.setBloc(tr.getBlockRoute());
@@ -96,5 +101,4 @@ public class Advance extends Bloc {
     public String name() {
         return "Advance";
     }
-
 }

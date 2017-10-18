@@ -22,11 +22,11 @@ package exceptions;
  *
  * @author Ezequiel Andujar Montes
  */
-public class MalformedFunctionDistribution extends Exception{
+public class MalformedFunctionDistributionException extends Exception{
     
     private static final long serialVersionUID = 1L;
     
-    public MalformedFunctionDistribution() {
+    public MalformedFunctionDistributionException() {
         super("Malformed function distribution");
     }    
 }
