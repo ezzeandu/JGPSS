@@ -33,10 +33,12 @@ package model.blocks;
  * Transaction based on the result.
  */
 import exceptions.ParameterNotANumberException;
+import exceptions.ParameterNotFoundException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import static model.SNA.evaluate;
+import static java.lang.Integer.valueOf;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -82,42 +84,27 @@ public class Loop extends Bloc {
     @Override
     public Bloc execute(Xact tr) throws Exception {
 
-        Bloc blocB = getProces().findBloc(B);
-        Bloc nextBlock = null;
-        try {
+        incTrans(tr);
 
-            incTrans(tr);
+        String param = evaluate(A, getModel(), tr);
 
-            Integer counter;
-            
-            try {
-                counter = Integer.valueOf(tr.getParameter("loop-counter").toString());
-            } catch (NumberFormatException e) {
-                throw new ParameterNotANumberException("loop-counter");            
-            }
-            if (counter == null) {
-
-                try {
-                    counter = Integer.valueOf(evaluate(A, getModel(), tr));
-                } catch (NumberFormatException e) {
-                    throw new ParameterNotANumberException(A);                
-                }
-
-                counter--;
-                tr.getTransactionParameters().put("loop-counter", counter);
-                nextBlock = blocB;
-            } else if (counter > 0) {
-                counter--;
-                tr.getTransactionParameters().put("loop-counter", counter);
-                nextBlock = blocB;
-            } else {
-                nextBlock = nextBloc(tr);
-            }
-
-        } catch (NumberFormatException e) {
-            throw new Exception("At Loop Block " + getLabel() + " parameter " + A + " not found");
+        if (tr.getParameter(param) == null) {
+            throw new ParameterNotANumberException(param);
         }
-        return nextBlock;
+        if (!(tr.getParameter(param) instanceof Integer)) {
+            throw new ParameterNotFoundException(param);
+        }
+
+        Integer counter = (Integer) tr.getParameter(param);
+
+        counter -= 1;
+        
+        if (counter == 0) {
+            tr.getTransactionParameters().put(param, counter);
+            return nextBloc(tr);
+        }
+
+        return getProces().findBloc(B);
     }
 
     @Override

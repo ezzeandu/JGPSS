@@ -73,13 +73,7 @@ public class Savail extends Bloc {
     @Override
     public Bloc execute(Xact tr) {
 
-        getModel().getFacilities().get(A).setAvailable(true);
-        PriorityQueue<Xact> BEC = getModel().getBEC().get(A);
-
-        if (!BEC.isEmpty() && getModel().getFacilities().get(A).isAvailable()) {
-            Xact trBlocked = BEC.poll();
-            getModel().getCEC().add(trBlocked);
-        }
+        getModel().getFacilities().get(A).setAvailable(true);        
         return nextBloc(tr);
     }   
 
