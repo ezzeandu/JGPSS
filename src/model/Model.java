@@ -18,13 +18,6 @@
  */
 package model;
 
-import exceptions.FacilityNotFoundException;
-import exceptions.FunctionNotFoundException;
-import exceptions.ModelSyntaxException;
-import exceptions.ParameterNotFoundException;
-import exceptions.QueueNotFoundException;
-import exceptions.SaveValueNotFoundException;
-import exceptions.StorageNotFoundException;
 import model.entities.QueueReport;
 import model.entities.Storage;
 import model.entities.Xact;
@@ -38,8 +31,8 @@ import lombok.Getter;
 import lombok.Setter;
 import model.entities.AmperVariable;
 import model.entities.Function;
+import model.entities.LogicSwitch;
 import model.entities.SaveValue;
-import model.entities.rng.Uniform;
 import utils.Constants;
 
 /**
@@ -58,18 +51,13 @@ public final class Model implements Serializable {
 
     static final long serialVersionUID = 42L;
 
-    @Getter
-    @Setter
     private String name;
-    @Getter
-    @Setter
     private String description;
     private ArrayList<Proces> proces;
     private ArrayList<Storage> storages;
     private ArrayList<SaveValue> saveValues;
     private ArrayList<Function> functions;
-    @Getter
-    @Setter
+    private ArrayList<LogicSwitch> switches;
     private ArrayList<AmperVariable<?>> amperVariables;
     private ArrayList<Matrix<Float>> matrix;
 
@@ -124,6 +112,7 @@ public final class Model implements Serializable {
         matrix = new ArrayList<>();
         amperVariables = new ArrayList<>();
         functions = new ArrayList<>();
+        switches = new ArrayList<>();
 
         CEC = new PriorityQueue<>(1000, this.getPriorityComparator());
         FEC = new PriorityQueue<>(1000, this.getTimeComparator());
@@ -270,6 +259,22 @@ public final class Model implements Serializable {
                 .orElse(null);
     }
 
+    
+    /**
+     * Restore model status to the initial state
+     */
+    public void clean() {
+        relativeClock = 0;
+        CEC.clear();
+        FEC.clear();
+        BEC.clear();
+        saveValues.forEach(sv -> sv.reset());
+        facilities.forEach((k,v) -> v.clean());
+        queues.forEach((k,v) -> v.clean());
+        amperVariables.forEach(av -> av.reset());
+        preemptedXacts.forEach((k,v) -> v.clear());
+    }
+    
     /**
      * To execute the simulation model.
      *
@@ -300,7 +305,6 @@ public final class Model implements Serializable {
 
             scanPhase();
             clockUpdatedPhase();
-            updateBEC();
 
         }
         updateCurrentCount();
@@ -319,7 +323,6 @@ public final class Model implements Serializable {
         if (TC > 0) {
             scanPhase();
             clockUpdatedPhase();
-            updateBEC();
         }
         updateCurrentCount();
         System.out.println("Simulation terminated");
@@ -353,6 +356,7 @@ public final class Model implements Serializable {
                 FEC.add(xact);
             }
         }
+        updateBEC();
     }
 
     private void updateBEC() {

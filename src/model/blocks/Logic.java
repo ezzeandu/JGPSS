@@ -18,10 +18,13 @@
  */
 package model.blocks;
 
+import exceptions.LogicSwitchNotFound;
+import java.util.ArrayList;
 import java.util.HashMap;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import model.entities.LogicSwitch;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -75,23 +78,33 @@ public class Logic extends Bloc {
     }
 
     @Override
-    public Bloc execute(Xact tr) {
+    public Bloc execute(Xact tr) throws Exception {
        
         incTrans(tr);
        
-        HashMap<String, Facility> facilities = this.getModel().getFacilities();
-        if (facilities.get(A) == null) {
-
-            Facility fs = new Facility(getModel());
-            facilities.put(A, fs);
+        ArrayList<LogicSwitch> switches = getModel().getSwitches();
+        
+        LogicSwitch logicSwitch = switches.stream()//
+                .filter(ls -> ls.getName().equals(A))//
+                .findFirst()//
+                .orElse(null);        
+        
+        if (logicSwitch == null) {
+            throw new LogicSwitchNotFound(A);
         }
-        if (this.x.equals(S)) {
-            facilities.get(A).capture(tr);
-        } else if (x.equals(R)) {
-            facilities.get(A).release(tr);
-        } else if (!facilities.get(A).isAvailable()) {
-            facilities.get(A).capture(tr);
-        } //facilities.put(this.A, (facilities.get(this.A) == 1) ? 0 : 1);
+        
+        switch(x) {
+            case S:
+                logicSwitch.setState(true);
+                break;
+            case R:
+                logicSwitch.setState(false);
+                break;
+            case I:
+                logicSwitch.invert();
+                break;
+        }        
+        
         return nextBloc(tr);
     }   
 

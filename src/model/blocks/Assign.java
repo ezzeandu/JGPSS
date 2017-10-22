@@ -103,7 +103,7 @@ public class Assign extends Bloc {
         incTrans(tr);
         HashMap<String, Object> transactionParameters = tr.getTransactionParameters();
 
-        if (transactionParameters.get(A) == null) {
+        if (transactionParameters.get(A.split("(\\+|\\-)")[0]) == null) {
             transactionParameters.put(A,B);
         } else {
 

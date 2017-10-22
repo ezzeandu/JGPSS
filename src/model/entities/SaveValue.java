@@ -18,7 +18,6 @@
  */
 package model.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,12 +25,22 @@ import lombok.NoArgsConstructor;
  *
  * @author Ezequiel Andujar Montes
  */
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class SaveValue {
     
     private String name;
     private Float value;
+    private Float originalValue;
     
+    public SaveValue(String name, Float value) {
+        
+        this.name = name;
+        this.value = value;
+        this.originalValue = value;        
+    }    
+    
+    public void reset() {
+        value = originalValue;
+    }
 }

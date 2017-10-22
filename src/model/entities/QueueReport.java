@@ -7,6 +7,7 @@ package model.entities;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import lombok.Getter;
 import model.Model;
 import model.TimeRecord;
 
@@ -17,10 +18,15 @@ import model.TimeRecord;
  */
 public class QueueReport {
 
+    @Getter
     private int maxCount;
+    @Getter
     private int totalEntries;
+    @Getter
     private int zeroEntries;
+    @Getter
     private int currentCount;
+    @Getter
     private int retry;
     private final Deque<TimeRecord> timeRecords;
     private final Model model;
@@ -35,15 +41,6 @@ public class QueueReport {
     }
 
     /**
-     * Returns the length of the Queue
-     *
-     * @return
-     */
-    public int getMaxCount() {
-        return maxCount;
-    }
-
-    /**
      * Returns the percentage of entries that are zero entries
      *
      * @return
@@ -51,24 +48,6 @@ public class QueueReport {
     public double getPercentZeros() {
 
         return (this.zeroEntries / this.totalEntries) * 100;
-    }
-
-    /**
-     * Returns the entries with 0 waiting time
-     *
-     * @return
-     */
-    public int getZeroEntries() {
-        return zeroEntries;
-    }
-
-    /**
-     * Returns the number of transactions that passed through the queue
-     *
-     * @return
-     */
-    public int getTotalEntries() {
-        return totalEntries;
     }
 
     /**
@@ -99,15 +78,6 @@ public class QueueReport {
     }
 
     /**
-     * Returns the current count of the queue (current length)
-     *
-     * @return
-     */
-    public int getCurrentCount() {
-        return currentCount;
-    }
-
-    /**
      * Increments the current count by entries units
      *
      * @param entries
@@ -115,11 +85,11 @@ public class QueueReport {
     public void incCurrentCount(int entries) {
         currentCount += entries;
         totalEntries += entries;
-        
+
         if (currentCount > maxCount) {
             maxCount = currentCount;
         }
-        
+
         regStartTime();
     }
 
@@ -147,10 +117,17 @@ public class QueueReport {
      */
     public void incMaxCount(int increment) {
         maxCount += increment;
-    }
+    }   
 
-    public int getRetry() {
-        return retry;
+    /**
+     * Cleans the statistics
+     */
+    public void clean() {
+        retry = 0;
+        maxCount = 0;
+        totalEntries = 0;
+        zeroEntries = 0;
+        timeRecords.clear();
     }
 
     private void regStartTime() {

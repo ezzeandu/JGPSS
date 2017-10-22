@@ -30,6 +30,7 @@ import utils.Constants;
  * A class representing the DEPART block.
  *
  * @author Pau Fonseca i Casas
+ * @author Ezequiel Andujar Montes
  * @version 1
  * @see     <a href="http://www-eio.upc.es/~Pau/index.php?q=node/28">Project
  * website</a>
@@ -75,10 +76,9 @@ public class Depart extends Bloc {
 
         incTrans(tr);
 
-        HashMap<String, QueueReport> queues = this.getModel().getQueues();
+        HashMap<String, QueueReport> queues = getModel().getQueues();
 
-        QueueReport queueStatistics = queues.get(this.A);
-        queueStatistics.decCurrentCount(B);       
+        queues.get(A).decCurrentCount(B);       
 
         return nextBloc(tr);
     }   

@@ -71,7 +71,6 @@ public class Release extends Bloc {
         HashMap<String, Facility> facilities = getModel().getFacilities();
 
         facilities.get(A).release(tr);
-        PriorityQueue<Xact> BEC = getModel().getBEC().get(A);
 
         return nextBloc(tr);
     }   

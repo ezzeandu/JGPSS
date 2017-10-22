@@ -270,5 +270,19 @@ public class Facility {
                 .map(tr -> tr.totalTime())//
                 .reduce(0f, (x, y) -> x + y);
     }
+    
+    /**
+     * Cleans the facilities data to the initial status
+     */
+    public void clean() {
+        
+        capturingTransactions = 0;
+        counterCount = 0;
+        captureCount = 0;
+        maxUsage = 0;
+        available = true;
+        holdingTimeRecords.clear();
+        unavailTimeRecords.clear();
+    }
 
 }

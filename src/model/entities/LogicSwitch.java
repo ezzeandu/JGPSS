@@ -18,34 +18,25 @@
  */
 package model.entities;
 
-import com.rits.cloning.Cloner;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  *
  * @author Ezequiel Andujar Montes
- * @param <T>
  */
-@NoArgsConstructor
-public class AmperVariable<T> {
+@AllArgsConstructor
+@Data
+public class LogicSwitch {
 
-    @Getter
     private String name;
-    @Getter
-    @Setter
-    private T value;
-    private T originalValue;
+    private boolean state;
 
-    public AmperVariable(String name, T value) {
-        
-        this.name = name;
-        this.value = value;
-        this.originalValue = new Cloner().deepClone(value);
-    }
-    
-    public void reset() {
-        value = originalValue;
-    }
+    /**
+     * Swtitches the state of the logic switch
+     */       
+
+    public void invert() {    
+        state = !state;        
+    }   
 }

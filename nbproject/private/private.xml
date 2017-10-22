@@ -2,6 +2,33 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Bloc.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/views/BlockDescriptionView.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/persistence/DiscManager.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/persistence/DDiscManager.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Queue.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Logic.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Savail.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/views/InterfaceControllerView.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Advance.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Terminate.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/entities/Function.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/Model.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/views/AmperVariableView.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Funavail.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Release.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Depart.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/reports/Report.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Generate.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/SNA.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Savevalue.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Seize.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Favail.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Priority.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/entities/QueueReport.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/src/model/blocks/Assemble.java</file>
+            <file>file:/Users/eZe/Repositorios/JGPSS/JGPSS/resources/model/cafeteria-test.txt</file>
+        </group>
     </open-files>
 </project-private>

@@ -719,8 +719,8 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                         PanelModelView jp = new PanelModelView(this);
                         this.obrirJPanel(jp);
 
-                    } catch (UnrecognizedModelException e) {
-                        generarPantallaError(e.getMessage());
+                    } catch (UnrecognizedModelException | NullPointerException e ) {
+                        generarPantallaError(Constants.ERROR_OPENING_FILE);
                     }
                 } else {
                     generarPantallaError(Constants.ERROR_OPENING_FILE);

@@ -16,36 +16,17 @@
  * AUTHORIZES YOU TO USE THE SOFTWARE IN ACCORDANCE WITH THE TERMS SET OUT IN
  * THE LICENSE AGREEMENT.
  */
-package model.entities;
-
-import com.rits.cloning.Cloner;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package exceptions;
 
 /**
  *
  * @author Ezequiel Andujar Montes
- * @param <T>
  */
-@NoArgsConstructor
-public class AmperVariable<T> {
-
-    @Getter
-    private String name;
-    @Getter
-    @Setter
-    private T value;
-    private T originalValue;
-
-    public AmperVariable(String name, T value) {
-        
-        this.name = name;
-        this.value = value;
-        this.originalValue = new Cloner().deepClone(value);
-    }
+public class LogicSwitchNotFound extends Exception {
     
-    public void reset() {
-        value = originalValue;
-    }
+    private static final long serialVersionUID = 1L;    
+    
+    public LogicSwitchNotFound(String name) {        
+        super(String.format("LogicSwitch %s not found", name));        
+    }    
 }

@@ -73,10 +73,7 @@ public class Leave extends Bloc {
 
         incTrans(tr);
         
-        HashMap<String, Facility> facilities = getModel().getFacilities();
-
-        facilities.get(A).release(B, tr);
-        PriorityQueue<Xact> BEC = getModel().getBEC().get(A);
+        getModel().getFacilities().get(A).release(B, tr);
 
         return nextBloc(tr);
     }     

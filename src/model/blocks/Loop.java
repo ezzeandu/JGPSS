@@ -95,7 +95,6 @@ public class Loop extends Bloc {
             } catch (NumberFormatException e) {
                 throw new ParameterNotANumberException("loop-counter");            
             }
-
             if (counter == null) {
 
                 try {

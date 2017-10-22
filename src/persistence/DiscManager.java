@@ -623,6 +623,11 @@ public class DiscManager {
 
     private Bloc crearBloc(String s, Proces proces, Model model) throws IOException {
 
+        
+        String[] part = s.split("( )*");
+        
+        
+        
         String partBloc;
         String vComentari[] = s.split(Constants.puntoycoma);
         s = vComentari[0];
@@ -630,7 +635,7 @@ public class DiscManager {
         if (vComentari.length > 1) {
             strComentari = vComentari[1];
         }
-
+        
         String strLabel;
         strLabel = (String) s.subSequence(0, Constants.espaisLabel.length());
         strLabel = strLabel.trim();

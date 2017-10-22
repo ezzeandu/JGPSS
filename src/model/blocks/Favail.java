@@ -18,6 +18,7 @@
  */
 package model.blocks;
 
+import exceptions.FacilityNotFoundException;
 import exceptions.UnrecognizedModelException;
 import java.util.PriorityQueue;
 import lombok.Getter;
@@ -80,12 +81,12 @@ public class Favail extends Bloc {
         incTrans(tr);
         String facilityName = evaluate(A, getModel(), tr);
 
-        PriorityQueue<Xact> BEC = getModel().getBEC().getOrDefault(facilityName, null);
-        PriorityQueue<Xact> preemptedXacts = getModel().getPreemptedXacts().getOrDefault(facilityName, null);
+        PriorityQueue<Xact> BEC = getModel().getBEC().get(facilityName);
+        PriorityQueue<Xact> preemptedXacts = getModel().getPreemptedXacts().get(facilityName);
         PriorityQueue<Xact> CEC = getModel().getCEC();
 
         if (getModel().getFacilities().get(facilityName) == null) {
-            throw new UnrecognizedModelException("Inexisteng facility " + facilityName);
+            throw new FacilityNotFoundException();
         }
 
         if (getModel().getFacilities().get(facilityName).isAvailable()) {

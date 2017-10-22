@@ -126,7 +126,8 @@ public class Gate extends Bloc {
                 || x.equals(NU)
                 || x.equals(SF)
                 || x.equals(SNF)
-                || x.equals(SE) || x.equals(SNE);
+                || x.equals(SE)
+                || x.equals(SNE);
 
         if (!gateType) {
             throw new Exception("At Gate Block " + getLabel() + ". Unknown gate type " + gateType);
@@ -145,7 +146,7 @@ public class Gate extends Bloc {
             }
         }
         return nextBlock;
-    }    
+    }
 
     @Override
     public String name() {

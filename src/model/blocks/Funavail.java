@@ -150,30 +150,20 @@ public class Funavail extends Bloc {
 
         Bloc destinationB = getProces().findBloc(evaluate(C, getModel(), tr));
         Bloc destinationF = getProces().findBloc(evaluate(F, getModel(), tr));
-
-        /**
-         * The transactions are removed from contention for the facility
-         */
+       
         if (B.equals("RE")) {
 
             if (destinationB != null && destinationB instanceof Release) {
-                throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process " + getProces().getDescpro() + "Operand C refers to a Release Block and must not be used with RE option");
+                throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process "
+                        + getProces().getDescpro() + "Operand C refers to a Release Block and must not be used with RE option");
             }
 
             facilityState.setOwningXact(null);
 
-        } /**
-         * The owning transaction continues
-         */
+        } 
         else if (B.equals("CO")) {
 
-        } /**
-         * The owning Transaction is preempted and placed on the Interrupt Chain
-         * of the Facility. If it was taken from the FEC and the C Operand is
-         * not used, it will be automatically restored to the FEC using the
-         * automatically saved residual time when the Facility again becomes
-         * available.
-         */
+        } 
         else if (B.isEmpty()) {
 
             if (getModel().getPreemptedXacts().get(facilityName) == null) {                
@@ -182,16 +172,7 @@ public class Funavail extends Bloc {
             }
             getModel().getPreemptedXacts().get(facilityName).add(tr);
         }
-        /**
-         * The C Operand may be used regardless of Operand B. It causes the
-         * owning Transaction to be displaced, and gives it a new destination
-         * Block. If you choose to return the Transaction to the FEC, having
-         * used the C Operand, you must explicitly route the Transaction to an
-         * ADVANCE Block. The D Operand causes the residual time to be saved in
-         * a Parameter of the owning Transaction. The residual time value is
-         * then available for explicit rescheduling when you use the Parameter
-         * value as Operand A of an ADVANCE Block.
-         */
+        
         if (!C.isEmpty() && destinationB != null) {
 
             if (getModel().getFEC().contains(owningXact)) {
@@ -207,12 +188,10 @@ public class Funavail extends Bloc {
                 owningXact.setBloc(destinationB);
             }
         } else {
-            throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process " + getProces().getDescpro() + "Missing operand C or block not found");
+            throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process "
+                    + getProces().getDescpro() + "Missing operand C or block not found");
         }
-
-        /**
-         * The owning transaction in is the FEC
-         */
+       
         if (getModel().getFEC().contains(owningXact)) {
 
             String residualTimeName = evaluate(D, getModel(), tr);
@@ -232,13 +211,7 @@ public class Funavail extends Bloc {
             owningXact.setMoveTime(owningXact.getMoveTime() - residualTimeValue);
             getModel().getBEC().get(A).add(owningXact);
         }
-
-        /**
-         * If E is CO, preempted Transactions are not removed from contention
-         * for the Facility, and may own the Facility during any unavailable
-         * period. Preempted Transactions may be given a new destination with
-         * the F Operand.
-         */
+       
         if (E.equals("CO")) {
 
             if (getModel().getPreemptedXacts().get(facilityName) != null) {
@@ -248,19 +221,12 @@ public class Funavail extends Bloc {
                     xact.setOwnershipGranted(true);
                 }
             }
-        } /**
-         * if E is RE, preempted Transactions are removed from contention for
-         * the Facility. This means that the Transaction may continue to
-         * circulate in the simulation without restrictions due to a preemption
-         * at this Facility (there may be outstanding preemptions at other
-         * Facilities, however). It also means that preempted Transactions must
-         * not attempt to RETURN or RELEASE the Facility. Optionally, the F
-         * Operand is available to redirect the course of such a Transaction.
-         */
+        } 
         else if (E.equals("RE") && getModel().getPreemptedXacts().get(facilityName) != null) {
 
             if (destinationF != null && destinationF instanceof Release) {
-                throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process " + getProces().getDescpro() + "Operand C refers to a Release Block and must not be used with RE option");
+                throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process " + getProces().getDescpro()
+                        + "Operand C refers to a Release Block and must not be used with RE option");
             }
 
             while (!getModel().getBEC().get(facilityName).isEmpty()) {
@@ -269,11 +235,7 @@ public class Funavail extends Bloc {
                 getModel().getCEC().add(preemptedXact);
             }
 
-        } /**
-         * If E is Null, preempted Transactions are left on the Interrupt Chain
-         * of the Facility, and cannot be granted ownership of the Facility
-         * during the unavailable period.
-         */
+        } 
         else if (E.isEmpty() && getModel().getPreemptedXacts().get(facilityName) != null) {
             while (getModel().getBEC().get(facilityName).iterator().hasNext()) {
 
@@ -291,7 +253,8 @@ public class Funavail extends Bloc {
                 }
             }
         } else {
-            throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process " + getProces().getDescpro() + "Missing operand F");
+            throw new Exception("In Block FUNAVAIL " + getLabel() + " at Process "
+                    + getProces().getDescpro() + "Missing operand F");
         }
         return nextBloc(tr);
     }
