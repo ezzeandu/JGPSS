@@ -86,7 +86,8 @@ public class Match extends Bloc {
 
         if (matchBlock == null) {
 
-            throw new Exception("In Match Bloc " + getLabel() + " at proces " + getProces().getDescpro() + "Conjugate match block not found");
+            throw new Exception("In Match Bloc " + getLabel() + " at proces " + 
+                    getProces().getDescpro() + "Conjugate match block not found");
 
         } else if (!matchBlock.getMatchChain().isEmpty()) {
 
@@ -162,7 +163,6 @@ public class Match extends Bloc {
                 .filter(t -> t.getAssemblySet() == xact.getAssemblySet())//
                 .findFirst()//
                 .orElse(null);
-
     }   
 
     @Override

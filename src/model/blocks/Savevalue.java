@@ -18,6 +18,7 @@
  */
 package model.blocks;
 
+import exceptions.SaveValueNotFoundException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -87,7 +88,7 @@ public class Savevalue extends Bloc {
         SaveValue sv = getModel().getSaveValue(A);
         
         if (sv == null) {
-            throw new Exception("SaveValue " + A + " does not exists");
+            throw new SaveValueNotFoundException(A);
         }        
         
         float value = getModel().getSaveValue(A).getValue();

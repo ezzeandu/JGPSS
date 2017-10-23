@@ -27,8 +27,6 @@ import model.blocks.Facility;
 import java.io.Serializable;
 import java.util.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import model.entities.AmperVariable;
 import model.entities.Function;
 import model.entities.LogicSwitch;

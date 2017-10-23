@@ -91,8 +91,50 @@ public class Gather extends Bloc {
      */
     @Override
     public Bloc execute(Xact tr) {
+        incTrans(tr);
+
+        Xact waitingXact = findWaitingXact(tr);
+
+        if (waitingXact == null) {
+
+            A--;
+
+            tr.setCounter(A);
+            if (A == 0) {
+                return nextBloc(tr);
+            } else {
+                getMatchChain().add(tr);
+            }
+        } else {
+
+            if (waitingXact.decCounter() == 0) {
+                getMatchChain().remove(waitingXact);
+
+                if (getModel().preempted(waitingXact)) {
+                    nextBloc(waitingXact);
+                    getModel().getCEC().add(waitingXact);
+                }
+            }
+        }
         return null;
-    }    
+    }   
+    
+    private Xact findWaitingXact(Xact tr) {
+
+        if (getMatchChain().isEmpty()) {
+            return null;
+        }
+
+        while (getMatchChain().iterator().hasNext()) {
+
+            Xact currentTr = getMatchChain().iterator().next();
+
+            if (currentTr.getAssemblySet() == tr.getAssemblySet()) {
+                return currentTr;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String name() {

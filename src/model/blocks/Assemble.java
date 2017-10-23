@@ -108,7 +108,6 @@ public class Assemble extends Bloc {
                 getMatchChain().add(tr);
             }
         } else {
-            tr = null;
 
             if (waitingXact.decCounter() == 0) {
                 getMatchChain().remove(waitingXact);

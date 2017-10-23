@@ -18,10 +18,13 @@
  */
 package model.blocks;
 
+import exceptions.BlockNotFound;
+import exceptions.FunctionNotFoundException;
 import java.util.PriorityQueue;
 import lombok.Getter;
 import lombok.Setter;
 import static model.SNA.evaluate;
+import model.entities.Function;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -40,11 +43,21 @@ import utils.Constants;
  */
 public class Transfer extends Bloc {
 
-    @Getter @Setter private String A;
-    @Getter @Setter private String B;
-    @Getter @Setter private String C;
-    @Getter @Setter private String D;
-    @Getter @Setter private PriorityQueue<Xact> BloquedXacts;
+    @Getter
+    @Setter
+    private String A;
+    @Getter
+    @Setter
+    private String B;
+    @Getter
+    @Setter
+    private String C;
+    @Getter
+    @Setter
+    private String D;
+    @Getter
+    @Setter
+    private PriorityQueue<Xact> BloquedXacts;
 
     /**
      * String identifying Both TRANSFERs.
@@ -189,7 +202,6 @@ public class Transfer extends Bloc {
             } else {
                 nextBlock = testBlocks(B, C, D, tr);
 
-                // If all blocks fail testing the active transaction, we put it in the BloquedXacts queue
                 if (nextBlock == null) {
                     activeTransaction.setDelayed(true);
                     BloquedXacts.add(activeTransaction);
@@ -225,6 +237,24 @@ public class Transfer extends Bloc {
          */
         else if (A.equals(FN)) {
 
+            Function f = getModel().getFunctions().stream()//
+                    .filter(fn -> fn.getName().equals(B))//
+                    .findFirst()//
+                    .orElse(null);
+
+            if (f == null) {
+                throw new FunctionNotFoundException(B);
+            }
+
+            Integer blockPos = Math.round(f.evaluate()) + Integer.valueOf(C);
+
+            try {
+                nextBlock = getProces().getBlocs().get(blockPos);
+            }
+            catch (IndexOutOfBoundsException e) {
+                throw new BlockNotFound(blockPos);
+            }
+
         } /**
          * When the A Operand is P, the TRANSFER Block operates in "Parameter
          * Mode". In Parameter Mode, the Active Transaction jumps to a location
@@ -237,9 +267,17 @@ public class Transfer extends Bloc {
             Float parameter = (Float) tr.getParameter(B);
 
             if (parameter == null) {
-                throw new Exception("At Transfer Block: " + getLabel() + ". Transaction parameter " + B + " not specified");
+                throw new Exception("At Transfer Block: "
+                        + getLabel()
+                        + ". Transaction parameter "
+                        + B
+                        + " not specified");
             } else if (parameter > getProces().getBlocs().size()) {
-                throw new Exception("At Transfer Block: " + getLabel() + ". Transaction parameter " + B + " with value out of bounds");
+                throw new Exception("At Transfer Block: "
+                        + getLabel()
+                        + ". Transaction parameter "
+                        + B
+                        + " with value out of bounds");
             } else {
                 nextBlock = getProces().getBlocs().get(Math.round(parameter));
             }
@@ -283,7 +321,11 @@ public class Transfer extends Bloc {
             if (blocB != null) {
                 nextBlock = blocB;
             } else {
-                throw new Exception("At Transfer Block: " + getLabel() + ". Block " + B + " not found");
+                throw new Exception("At Transfer Block: "
+                        + getLabel()
+                        + ". Block "
+                        + B
+                        + " not found");
             }
 
         } else if (A.isEmpty() && !B.isEmpty()) {
@@ -321,7 +363,10 @@ public class Transfer extends Bloc {
                 }
 
             } catch (NumberFormatException e) {
-                throw new Exception("At Transfer Block: " + getLabel() + " at proces " + getProces().getDescpro() + ". Bad Fraction Format");
+                throw new Exception("At Transfer Block: "
+                        + getLabel()
+                        + " at proces " + getProces().getDescpro()
+                        + ". Bad Fraction Format");
             }
         }
         return nextBlock;

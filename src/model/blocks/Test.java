@@ -22,6 +22,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import static model.SNA.evaluate;
+import static java.lang.Float.parseFloat;
 import model.entities.Xact;
 import utils.Constants;
 
@@ -103,26 +104,27 @@ public class Test extends Bloc {
 
         incTrans(tr);
 
-        Float _A = Float.parseFloat(evaluate(A, getModel(), tr));
-        Float _B = Float.parseFloat(evaluate(B, getModel(), tr));
+        Float _A = parseFloat(evaluate(A, getModel(), tr));
+        Float _B = parseFloat(evaluate(B, getModel(), tr));
 
         Bloc nextBloc;
 
         if (!this.C.isEmpty()) {
-            nextBloc = getModel().findBloc(this.C);
+            nextBloc = getModel().findBloc(C);
         } else {
             nextBloc = nextBloc(tr);
         }
 
-        boolean test = this.x.equals(E) && _A.equals(_B)
-                || this.x.equals(G) && _A > _B
-                || this.x.equals(GE) && _A >= _B
-                || this.x.equals(L) && _A < _B
-                || this.x.equals(LE) && _A <= _B
-                || this.x.equals(NE) && !_A.equals(_B);
+        boolean test = x.equals(E) && _A.equals(_B)
+                || x.equals(G) && _A > _B
+                || x.equals(GE) && _A >= _B
+                || x.equals(L) && _A < _B
+                || x.equals(LE) && _A <= _B
+                || x.equals(NE) && !_A.equals(_B);
 
         if (!test) {
             nextBloc = null;
+            getModel().getFEC().add(tr);
         }
         return nextBloc;
     }
