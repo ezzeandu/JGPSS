@@ -314,9 +314,8 @@ public class Transfer extends Bloc {
             }
             tr.setDelayed(false);
 
-        } else if (A.equals(SNA)) {
-
-        } else if (A.equals(NUL) || A.isEmpty()) {
+        } 
+        else if (A.equals(NUL) || A.isEmpty()) {
 
             if (blocB != null) {
                 nextBlock = blocB;
@@ -341,7 +340,7 @@ public class Transfer extends Bloc {
          * fractional probability. The alternate destination is specified in
          * Operand B, or the NSB if Operand B is omitted.
          */
-        else {
+        else if (A.matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")){
 
             try {
 
