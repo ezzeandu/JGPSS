@@ -174,16 +174,16 @@ public class FunctionTest extends TestCase {
     @Test
     public void test17() throws Exception {
 
-        Function f = new Function("test", "RN1", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");        
-        Float result = f.evaluate();        
+        Function f = new Function("test", "RN1", "D5", ".4,1/.7,2/.85,3/.95,4/1,5");
+        Float result = f.evaluate();
         assertTrue(result >= 1f && result <= 5f);
     }
-    
+
     @Test
     public void test18() throws Exception {
 
-        Function f = new Function("test", "RN5", "D5", "1,1/2,2/3,3/4,4/5,5");        
-        Float result = f.evaluate();        
+        Function f = new Function("test", "RN5", "D5", "1,1/2,2/3,3/4,4/5,5");
+        Float result = f.evaluate();
         assertTrue(result >= 1f && result <= 5f);
     }
 }

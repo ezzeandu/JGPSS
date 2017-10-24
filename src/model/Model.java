@@ -95,11 +95,11 @@ public final class Model implements Serializable {
      * Absolute simulation clock.
      */
 
-    private float absoluteClock;
+    private ArrayList<Float> absoluteClock;
+
     /**
      * Relative simulation clock.
      */
-
     private float relativeClock;
 
     public Model() {
@@ -111,6 +111,7 @@ public final class Model implements Serializable {
         amperVariables = new ArrayList<>();
         functions = new ArrayList<>();
         switches = new ArrayList<>();
+        absoluteClock = new ArrayList<>();
 
         CEC = new PriorityQueue<>(1000, this.getPriorityComparator());
         FEC = new PriorityQueue<>(1000, this.getTimeComparator());
@@ -144,6 +145,15 @@ public final class Model implements Serializable {
                 return 1;
             }
         };
+    }
+
+    public Float getAbsoluteClock() {
+
+        Float sum = 0f;
+        for (Float f : absoluteClock) {
+            sum += f;
+        }
+        return sum;
     }
 
     public void incIdXact() {
@@ -257,7 +267,6 @@ public final class Model implements Serializable {
                 .orElse(null);
     }
 
-    
     /**
      * Restore model status to the initial state
      */
@@ -267,12 +276,18 @@ public final class Model implements Serializable {
         FEC.clear();
         BEC.clear();
         saveValues.forEach(sv -> sv.reset());
-        facilities.forEach((k,v) -> v.clean());
-        queues.forEach((k,v) -> v.clean());
+        facilities.forEach((k, v) -> v.clean());
+        queues.forEach((k, v) -> v.clean());
         amperVariables.forEach(av -> av.reset());
-        preemptedXacts.forEach((k,v) -> v.clear());
+        preemptedXacts.forEach((k, v) -> v.clear());
+
+        proces.stream().forEach(p -> {
+            p.getBlocs().stream().forEach(b -> {                
+                b.clear();
+            });
+        });
     }
-    
+
     /**
      * To execute the simulation model.
      *
@@ -281,7 +296,6 @@ public final class Model implements Serializable {
      */
     public void execute(boolean b) throws Exception {
         relativeClock = 0;
-        absoluteClock = 0;
         InitializeGenerateBocs();
         if (!b) {
             executeAll();
@@ -323,7 +337,6 @@ public final class Model implements Serializable {
             clockUpdatedPhase();
         }
         updateCurrentCount();
-        System.out.println("Simulation terminated");
     }
 
     private void scanPhase() throws Exception {
@@ -352,6 +365,10 @@ public final class Model implements Serializable {
 
             if (xact != null) {
                 FEC.add(xact);
+            }
+
+            if (TC == 0) {
+                absoluteClock.add(relativeClock);
             }
         }
         updateBEC();

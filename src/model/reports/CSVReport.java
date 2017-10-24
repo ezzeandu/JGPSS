@@ -68,7 +68,7 @@ public class CSVReport implements Report {
 
         int totalBlocks = model.getProces().stream().mapToInt(p -> p.getBlocs().size()).sum();
         writer.println(String.format("%-12s;%-12s;%-10s;%-15s;%-10s", "START TIME", "END TIME", "BLOCKS", "FACILITIES", "STORAGES"));
-        writer.println(String.format("%-12f;%-12f;%-10d;%-15d;%-10d", 0.000f, model.getRelativeClock(), totalBlocks, model.getFacilities().size(), model.getStorages().size()));
+        writer.println(String.format("%-12f;%-12f;%-10d;%-15d;%-10d", 0.000f, model.getAbsoluteClock(), totalBlocks, model.getFacilities().size(), model.getStorages().size()));
         writer.println();
         writer.println();
     }

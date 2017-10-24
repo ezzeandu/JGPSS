@@ -203,4 +203,11 @@ public abstract class Bloc {
             return null;
         }
     }
+    
+    public void clear() {
+        currentCount = 0;
+        entryCount.clear();
+        retryCount.clear();
+        matchChain.clear();
+    }
 }

@@ -342,11 +342,13 @@ public class SNA {
                     throw new VariableNotFoundException(varName);
                 }
 
-            } else if (A.matches("[0-9]+")) {
+            } else if (A.matches("[0-9]+") || A.matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
 
                 _A = A;
 
-            } else {
+            } 
+              
+            else {
                 throw new ModelSyntaxException();
             }
             return _A;

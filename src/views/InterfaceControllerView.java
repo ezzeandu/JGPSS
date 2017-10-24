@@ -36,7 +36,7 @@ import utils.VarGlobals;
  * @author Ezequiel Andujar Montes
  */
 public class InterfaceControllerView extends javax.swing.JFrame implements Serializable {
-
+    
     private final static long serialVersionUID = 1L;
 
     /**
@@ -61,7 +61,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
         VarGlobals.esGuardat = false;
         VarGlobals.esModificat = false;
         setTitle(Constants.tituloPrincipal);
-
+        
     }
 
     /**
@@ -277,7 +277,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }// </editor-fold>//GEN-END:initComponents
 
     private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
-
+        
         AboutView pa = new AboutView();
         pa.setLocationRelativeTo(this);
         pa.setVisible(true);
@@ -285,7 +285,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }//GEN-LAST:event_aboutActionPerformed
 
     private void HelpContentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpContentsActionPerformed
-
+        
         HelpView pa = new HelpView();
         pa.setLocationRelativeTo(this);
         pa.setVisible(true);
@@ -295,7 +295,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         if ((VarGlobals.model != null) && (VarGlobals.esModificat)) {
             int sel = mostrarDialogo(Constants.guardar, Constants.salir, Constants.SalirAplicacion, Constants.caution);
-
+            
             if (sel != 0) {
                 setVisible(false);
                 dispose();
@@ -313,7 +313,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }//GEN-LAST:event_ExitActionPerformed
 
     private void modelmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modelmActionPerformed
-
+        
         OpenNewModelView pOpenModel = new OpenNewModelView(VarGlobals.model.getName(), VarGlobals.model.getDescription());
         pOpenModel.setLocationRelativeTo(this);
         pOpenModel.setVisible(true);
@@ -321,7 +321,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
 }//GEN-LAST:event_modelmActionPerformed
 
     private void storagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storagesActionPerformed
-
+        
         StoragesView descBloc = new StoragesView(this, false);
         descBloc.setLocationRelativeTo(this);
         descBloc.setVisible(true);
@@ -333,7 +333,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }//GEN-LAST:event_formWindowStateChanged
 
     private void ObrirModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObrirModelActionPerformed
-
+        
         try {
             if (VarGlobals.model != null) {
                 int sel = mostrarDialogo(Constants.Si, Constants.cancel, Constants.Seguro, Constants.caution);
@@ -361,7 +361,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         if ((VarGlobals.model != null) && (VarGlobals.esModificat)) {
             int sel = mostrarDialogo(Constants.guardar, Constants.salir, Constants.SalirAplicacion, Constants.caution);
-
+            
             if (VarGlobals.urlGuardar != null) {
                 guardar();
             } else {
@@ -369,15 +369,15 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             }
         }
     }//GEN-LAST:event_formWindowClosing
-
+    
     private int mostrarDialogo(String opcion1, String opcion2, String mensaje, String titulo) {
         int sel = 0;
-
+        
         Object[] options = {
             opcion1,
             opcion2
         };
-
+        
         sel = JOptionPane.showOptionDialog(
                 frame,
                 mensaje,
@@ -391,7 +391,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }
 
     private void SaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveAsActionPerformed
-
+        
         guardarComo();
 
     }//GEN-LAST:event_SaveAsActionPerformed
@@ -399,7 +399,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     private void SaveModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveModelActionPerformed
         guardarModel();
     }//GEN-LAST:event_SaveModelActionPerformed
-
+    
     private void guardarModel() {
         if (!VarGlobals.esGuardat) {
             guardarComo();
@@ -413,7 +413,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     }//GEN-LAST:event_NewModelMouseClicked
 
     private void NewModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewModelActionPerformed
-
+        
         if (VarGlobals.model != null) {
             int sel = mostrarDialogo(Constants.Si, Constants.cancel, Constants.Seguro, Constants.caution);
             if (sel == 0) {
@@ -427,12 +427,12 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                     }
                 } else {
                     mostrarNewModel();
-
+                    
                 }
             }
         } else {
             mostrarNewModel();
-
+            
         }
     }//GEN-LAST:event_NewModelActionPerformed
 
@@ -448,9 +448,9 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             reportType.setLocationRelativeTo(this);
             reportType.setVisible(true);
             Report report = VarGlobals.selectedReport;
-
+            
             if (VarGlobals.continuar) {
-
+                
                 try {
                     JFileChooser fc = new JFileChooser();
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("", report.getType());
@@ -458,30 +458,31 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                     fc.setDialogType(JFileChooser.SAVE_DIALOG);
                     fc.showSaveDialog(this);
                     File Guardar = fc.getSelectedFile();
-
+                    
                     if (Guardar != null) {
                         String path = fc.getSelectedFile().getAbsolutePath();
                         report.createReport(model, path);
+                        model.clean();
                     }
                 } catch (Exception e) {
                     generarPantallaError(Constants.errortxt);
                 }
             }
-
+            
         } catch (Exception ex) {
             mostrarDialogo("Ok", "Cancel", ex.getMessage(), "Runtime Error");
         }
 }//GEN-LAST:event_RunActionPerformed
 
     private void ConfigurationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfigurationActionPerformed
-
+        
         ConfigurationView Pant = new ConfigurationView(this, true);
         Pant.setLocationRelativeTo(this);
         Pant.setVisible(true);
     }//GEN-LAST:event_ConfigurationActionPerformed
 
     private void FunctionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FunctionsActionPerformed
-
+        
         FunctionView fv = new FunctionView(this, false);
         fv.setLocationRelativeTo(this);
         fv.setVisible(true);
@@ -498,36 +499,32 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
 }//GEN-LAST:event_InitialActionPerformed
 
     private void StepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StepActionPerformed
-
-        //Es crea la nova pantalla.
-        RunView Pant = new RunView(this, true);
-        Pant.setLocationRelativeTo(this);
-        Pant.setVisible(true);
-
+        
         Model model = VarGlobals.model;
         if (model == null) {
             return;
         }
-
-        model.setTC(VarGlobals.TC);
+        model.setTC(VarGlobals.TC);        
+        
         try {
-            model.execute(true);
-        } catch (Exception ex) {
-            mostrarDialogo("Ok", "Cancel", ex.getMessage(), "Runtime Error");
+            model.InitializeGenerateBocs();
+        } catch (Exception e) {
+            generarPantallaError(e.getMessage());
         }
-
-        //S'asigna el model a executar a la pantalla de simulaci? de pas a pas.
-        Pant.setModel(model);
+        
+        RunView Pant = new RunView(model, this, true);
+        Pant.setLocationRelativeTo(this);
+        Pant.setVisible(true);
     }//GEN-LAST:event_StepActionPerformed
 
     private void AmpervariablesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AmpervariablesActionPerformed
-
+        
         AmperVariableView amperVariableView = new AmperVariableView(this, false);
         amperVariableView.setLocationRelativeTo(this);
         amperVariableView.setVisible(true);
 
     }//GEN-LAST:event_AmpervariablesActionPerformed
-
+    
     private void mostrarNewModel() {
         //buidar les variables globals, ja que comencem un modelm nou
 
@@ -538,7 +535,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
         pOpenModel.setLocationRelativeTo(this);
         pOpenModel.setVisible(true);
         pOpenModel.dispose();
-
+        
         if (VarGlobals.continuar) {
             VarGlobals.esModificat = true;
             this.getContentPane().removeAll();
@@ -553,13 +550,13 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             Configuration.setEnabled(true);
             Run.setEnabled(true);
             Step.setEnabled(true);
-
+            
             PanelModelView jp = new PanelModelView(this);
             this.obrirJPanel(jp);
-
+            
         }
     }
-
+    
     private void obrirJPanel(javax.swing.JPanel jp) {
         this.getContentPane().removeAll();
         jp.setSize(730, 520);
@@ -573,7 +570,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                 layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(jp, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
+        
         pack();
     }
 
@@ -620,7 +617,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
     private javax.swing.JMenuItem storages;
     // End of variables declaration//GEN-END:variables
     private JFrame frame;
-
+    
     private void guardarComo() {
         try {
             //System.getProperty("user.dir") Abre el JFileChooser donde esta el ejecutable
@@ -642,7 +639,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                             + Constants.archivoexiste,
                             Constants.caution
                     );
-
+                    
                     if (sel != 0) {
                         return;
                     } else {
@@ -658,36 +655,36 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                 if (nomFile.length() > 3) {
                     extensio = nomFile.substring(nomFile.length() - 4);
                 }
-
+                
                 if (!extensio.equals(Constants.extensio)) {
                     VarGlobals.dg.guardarTxt(Guardar + Constants.extensio);
                     VarGlobals.urlGuardar += Constants.extensio;
                 } else {
                     VarGlobals.dg.guardarTxt(Guardar.getName());
                 }
-
+                
                 VarGlobals.esModificat = false;
                 VarGlobals.esGuardat = true;
                 JOptionPane.showMessageDialog(null, "Model saved successfully");
-
+                
             }
         } catch (IOException ioe) {
             generarPantallaError(Constants.errortxt);
         }
-
+        
     }
-
+    
     private void guardar() {
         try {
             VarGlobals.dg.guardarTxt(VarGlobals.urlGuardar);
             VarGlobals.esModificat = false;
             JOptionPane.showMessageDialog(null, "Model saved successfully");
-
+            
         } catch (IOException ioe) {
             generarPantallaError(Constants.errortxt);
         }
     }
-
+    
     private void abrirModel() throws IOException, MalformedFunctionDistributionException {
         VarGlobals.Abrir = true;
         JFileChooser fc = new JFileChooser(System.getProperty("user.dir"));
@@ -703,7 +700,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                         VarGlobals.dg.recuperarTxt(entrada);
                         VarGlobals.urlGuardar = fc.getSelectedFile().getAbsolutePath();
                         VarGlobals.esGuardat = true;
-
+                        
                         SaveAs.setEnabled(true);
                         SaveModel.setEnabled(true);
                         storages.setEnabled(true);
@@ -715,11 +712,11 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
                         Configuration.setEnabled(true);
                         Run.setEnabled(true);
                         Step.setEnabled(true);
-
+                        
                         PanelModelView jp = new PanelModelView(this);
                         this.obrirJPanel(jp);
-
-                    } catch (UnrecognizedModelException | NullPointerException e ) {
+                        
+                    } catch (UnrecognizedModelException | NullPointerException e) {
                         generarPantallaError(Constants.ERROR_OPENING_FILE);
                     }
                 } else {
@@ -730,7 +727,7 @@ public class InterfaceControllerView extends javax.swing.JFrame implements Seria
             }
         }
     }
-
+    
     private void generarPantallaError(String mensage) {
         ErrorView perror = new ErrorView(mensage);
         perror.setLocationRelativeTo(this);

@@ -62,8 +62,6 @@ public class Sunavail extends Bloc {
 
         if (getModel().getFacilities().get(facilityName) == null) {
             getModel().getFacilities().put(facilityName, new Facility(getModel()));
-        } else {
-            throw new Exception("Storage " + facilityName + "not found");
         }
 
         Facility facilityState = getModel().getFacilities().get(facilityName);

@@ -748,6 +748,11 @@ public class Constants {
      * Txt report type
      */
     public static String txtReport = "txt";
+    
+    /**
+     * Screen Report
+     */
+    public static String screenReport = "screen";
 
     /**
      * Pdf report type
